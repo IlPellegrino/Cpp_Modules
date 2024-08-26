@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/19 13:19:09 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/26 15:22:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,12 @@ class	PhoneBook
 	private:
 		Contact	contacts[MAX_CONTACTS];
 		int		currentIndex;
+
 	public:
-		PhoneBook() : currentIndex(0) {}
+		PhoneBook();
+		~PhoneBook();
 
-		void	addContact(const  Contact& contact)
-		{
-			contacts[currentIndex] = contact;
-			currentIndex = (currentIndex + 1) % 8;
-		}
-
+		void	addContact();
 		void	displayContacts();
 };
 

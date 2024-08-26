@@ -6,75 +6,48 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:13 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/19 13:12:47 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/26 15:31:41 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phonebook.hpp"
 
-void	add(PhoneBook& pb, Contact& contact)
+PhoneBook::PhoneBook() : currentIndex(0) {}
+
+void	PhoneBook::addContact()
 {
 	std::string	line;
 
+	if (currentIndex == 8) {
+		currentIndex = 0;
+	}
+
 	for (int i = 0; i < 5; i++)
 	{
-		if (i == 0)
-		{
-			std::cout << "Enter First Name: ";
-			std::cin >> line;
-			contact.setFirstName(line);
-		}
-		else if (i == 1)
-		{
-			std::cout << "Enter Last Name: ";
-			std::cin >> line;
-			contact.setLastName(line);
-		}
-		else if (i == 2)
-		{
-			std::cout << "Enter nickname: ";
-			std::cin >> line;
-			contact.setNickName(line);
-		}
-		else if (i == 3)
-		{
-			std::cout << "Enter Phone Number: ";
-			std::cin >> line;
-			contact.setPhoneNumber(line);
-		}
-		else if (i == 4)
-		{
-			std::cout << "Enter Darkest Secret:";
-			std::cin >> line;
-			contact.setDarkestSecret(line);
-		}
+		std::cout << "Enter First Name: ";
+		std::cin >> line;
+		contacts[currentIndex].setFirstName(line);
+		
+		std::cout << "Enter Last Name: ";
+		std::cin >> line;
+		contacts[currentIndex].setLastName(line);
+
+		std::cout << "Enter nickname: ";
+		std::cin >> line;
+		contacts[currentIndex].setNickName(line);
+
+		std::cout << "Enter Phone Number: ";
+		std::cin >> line;
+		contacts[currentIndex].setPhoneNumber(line);
+
+		std::cout << "Enter Darkest Secret:";
+		std::cin >> line;
+		contacts[currentIndex].setDarkestSecret(line);
 	}
-	pb.addContact(contact);
+	currentIndex++;
 }
 
-void	search()
+void	PhoneBook::displayContacts()
 {
 	
-}
-
-int	main()
-{
-	Contact		contact;
-	PhoneBook	pb;
-	std::string	input;
-
-	for (int i = 1; i == 1; i = 1)
-	{
-		std::cout << "Enter input: ";
-		std::cin >> input;
-		if (input == "EXIT")
-			exit(0);
-		else if (input == "ADD")
-			add(pb, contact);
-		else if (input == "SEARCH")
-			exit(0);
-		else
-			std::cout << "Command not found\n";
-	}
-	return (0);
 }

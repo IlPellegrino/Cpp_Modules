@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:48:47 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/19 13:37:14 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/26 14:22:20 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 class Contact
 {
 	private:
+		void		printValue();
 		int			_index;
 		std::string	_firstName;
 		std::string	_lastName;
 		std::string	_nickName;
 		std::string	_phoneNumber;
-		std::string	_darkestSecret;\
+		std::string	_darkestSecret;
 
 	public:
 		Contact();
