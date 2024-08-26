@@ -6,13 +6,15 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:13 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/26 15:31:41 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/26 15:49:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phonebook.hpp"
 
 PhoneBook::PhoneBook() : currentIndex(0) {}
+
+PhoneBook::~PhoneBook() {}
 
 void	PhoneBook::addContact()
 {
@@ -22,26 +24,31 @@ void	PhoneBook::addContact()
 		currentIndex = 0;
 	}
 
-	for (int i = 0; i < 5; i++)
+	while (1)
 	{
 		std::cout << "Enter First Name: ";
-		std::cin >> line;
+		if (getline(std::cin, line).eof() || line.empty())
+			std::cerr << "Invalid input\n";
 		contacts[currentIndex].setFirstName(line);
 		
 		std::cout << "Enter Last Name: ";
-		std::cin >> line;
+		if (getline(std::cin, line).eof() || line.empty())
+			std::cerr << "Invalid input\n";
 		contacts[currentIndex].setLastName(line);
 
 		std::cout << "Enter nickname: ";
-		std::cin >> line;
+		if (getline(std::cin, line).eof() || line.empty())
+			std::cerr << "Invalid input\n";
 		contacts[currentIndex].setNickName(line);
 
 		std::cout << "Enter Phone Number: ";
-		std::cin >> line;
+		if (getline(std::cin, line).eof() || line.empty())
+			std::cerr << "Invalid input\n";
 		contacts[currentIndex].setPhoneNumber(line);
 
 		std::cout << "Enter Darkest Secret:";
-		std::cin >> line;
+		if (getline(std::cin, line).eof() || line.empty())
+			std::cerr << "Invalid input\n";
 		contacts[currentIndex].setDarkestSecret(line);
 	}
 	currentIndex++;
