@@ -6,10 +6,11 @@ int	main()
 	PhoneBook	phoneBook;
 	std::string	input;
 
-	for (int i = 1; i == 1; i = 1)
+	while (1)
 	{
-		std::cout << "Enter input: ";
-		std::cin >> input;
+		std::cout << CYAN << "Enter input -> [ADD] | [SEARCH] | [EXIT]: " << RESET;
+		if (getline(std::cin, input).eof())
+			exit(0);
 		if (input == "EXIT")
 			exit(0);
 		else if (input == "ADD")
@@ -17,7 +18,7 @@ int	main()
 		else if (input == "SEARCH")
 			phoneBook.displayContacts();
 		else
-			std::cout << "Command not found\n";
+			std::cout << RED << "Command not found\n" << RESET;
 	}
 	return (0);
 }
