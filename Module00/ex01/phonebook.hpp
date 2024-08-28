@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/27 19:54:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/28 12:16:14 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class	PhoneBook
 	private:
 		Contact	contacts[MAX_CONTACTS];
 		int		currentIndex;
+		int		_countContacts;
 
 	public:
 		PhoneBook();
@@ -46,6 +47,7 @@ class	PhoneBook
 		void	addContact();
 		void	displayContacts();
 		void	checker(std::string ref);
+		bool	lettersChecker(std::string line);
 };
 
 #endif

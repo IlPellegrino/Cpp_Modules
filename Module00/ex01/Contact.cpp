@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:48:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/27 10:44:06 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/28 12:15:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ void	Contact::setDarkestSecret(const std::string ds) {
 	_darkestSecret = ds;
 }
 
-void	Contact::setIndex(const int idx) {
-	_index = idx;
-}
-
 std::string	Contact::getFirstName() const {
 	return (_firstName);
 }
@@ -58,8 +54,4 @@ std::string	Contact::getPhoneNumber() const {
 
 std::string	Contact::getDarkestSecret() const {
 	return (_darkestSecret);
-}
-
-int	Contact::getIndex() const {
-	return (_index);
 }

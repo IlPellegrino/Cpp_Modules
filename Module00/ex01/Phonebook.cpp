@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:13 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/27 20:10:47 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/28 16:20:46 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,39 @@
 //check per i numeri e le stringhe
 // fare vari test anche con ctrlD
 
-PhoneBook::PhoneBook() : currentIndex(-1) {}
+PhoneBook::PhoneBook() : currentIndex(0), _countContacts(0) {}
 
 PhoneBook::~PhoneBook() {}
+
+bool	PhoneBook::lettersChecker(std::string line) {
+	bool	isNumber = true;
+	bool	isAlpha = true;
+
+	for (int i = 0; line[i]; i++) {
+        if (!std::isdigit(line[i])) {
+            isNumber = false;
+        }
+        if (!std::isalpha(line[i])) {
+            isAlpha = false;
+        }
+    }
+	if (isNumber && !isAlpha) {
+		return false;
+	}
+	else if (isNumber && isAlpha) {
+		return false;
+	}
+	else if (isAlpha && !isNumber) {
+		return true;
+	}
+	return true;
+}
 
 void	PhoneBook::addContact()
 {
 	std::string	line;
 
-	if (currentIndex == 8 || currentIndex < 0) {
+	if (currentIndex == 8) {
 		currentIndex = 0;
 	}
 
@@ -37,6 +61,10 @@ void	PhoneBook::addContact()
 			std::cerr << RED << "Field cannot be empty\n" << RESET;
 			continue;
 		}
+		else if (lettersChecker(line) == false) {
+			std::cerr << RED << "Please type only letters ;)\n" << RESET;
+			continue;
+		}
 		contacts[currentIndex].setFirstName(line);
 		
 		std::cout << "Enter Last Name: ";
@@ -47,6 +75,10 @@ void	PhoneBook::addContact()
 			std::cerr << RED << "Invalid input\n" << RESET;
 			continue;
 		}
+		else if (lettersChecker(line) == false) {
+			std::cerr << RED << "Please type only letters ;)\n" << RESET;
+			continue;
+		}
 		contacts[currentIndex].setLastName(line);
 
 		std::cout << "Enter nickname: ";
@@ -55,6 +87,10 @@ void	PhoneBook::addContact()
 		}
 		else if (line.empty()){
 			std::cerr << RED << "Invalid input\n" << RESET;
+			continue;
+		}
+		else if (lettersChecker(line) == false) {
+			std::cerr << RED << "Please type only letters ;)\n" << RESET;
 			continue;
 		}
 		contacts[currentIndex].setNickName(line);
@@ -77,11 +113,16 @@ void	PhoneBook::addContact()
 			std::cerr << RED << "Invalid input\n" << RESET;
 			continue;
 		}
+		else if (lettersChecker(line) == false) {
+			std::cerr << RED << "Please type only letters ;)\n" << RESET;
+			continue;
+		}
 		contacts[currentIndex].setDarkestSecret(line);
-		contacts[currentIndex].setIndex(currentIndex);
 		break;
 	}
 	currentIndex++;
+	if (_countContacts < 8)
+		_countContacts++;
 }
 
 void	PhoneBook::checker(std::string ref) {
@@ -96,7 +137,7 @@ void	PhoneBook::displayContacts()
 	std::string	line;
 	int			input;
 
-	if (currentIndex == -1) {
+	if (_countContacts == 0) {
 		std::cerr << RED << "PhoneBook empty, please add some contacts ;)" << RESET << std::endl;
 		return;
 	}
@@ -105,8 +146,8 @@ void	PhoneBook::displayContacts()
 		std::cout << YELLOW << "First Name" << WHITE << "|" << RESET;
 		std::cout << MAGENTA << "Last  Name" << WHITE << "|" << RESET;
 		std::cout << GREEN << "Nick  Name" << RESET << "|" <<  std::endl;
-		for (int i = 0; i < currentIndex; i++) {
-			std::cout << std::setw(10) << contacts[i].getIndex();
+		for (int i = 0; i < _countContacts; i++) {
+			std::cout << std::setw(10) << i + 1;
 			std::cout << "|";
 			checker(contacts[i].getFirstName());
 			std::cout << "|";
@@ -118,14 +159,13 @@ void	PhoneBook::displayContacts()
 		}
 	}
 	while (1) {
-		std::cout << CYAN << "Please insert the Contact index: ";
+		std::cout << CYAN << "Please insert the Contact index: " << RESET;
 		if (getline(std::cin, line).eof())
 			exit(0);
-		std::cin >> line;
 		if (line.empty())
-			break;
-		std::cin >> input;
-		if (input < 8 && input >= 0 && input < currentIndex) {
+			return;
+		input = std::atoi(line.c_str()) - 1;
+		if (input < 8 && input >= 0 && input < _countContacts) {
 			std::cout << BBLUE << "First Name: " << RESET << contacts[input].getFirstName() << std::endl;
 			std::cout << BBLUE << "Last Name: " << RESET << contacts[input].getLastName() << std::endl;
 			std::cout << BBLUE << "Nick Name: " << RESET << contacts[input].getNickName() << std::endl;
@@ -137,3 +177,5 @@ void	PhoneBook::displayContacts()
 		}
 	}
 }
+//main
+
