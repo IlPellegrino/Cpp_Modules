@@ -1,6 +1,6 @@
-NAME = account
+NAME = zombie
 
-SRC = tests.cpp Account.cpp
+SRC = main.cpp randomChump.cpp Zombie.cpp newZombie.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

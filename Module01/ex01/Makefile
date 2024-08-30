@@ -1,6 +1,6 @@
-NAME = account
+NAME = zombie
 
-SRC = tests.cpp Account.cpp
+SRC = main.cpp zombieHorde.cpp Zombie.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

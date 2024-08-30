@@ -1,6 +1,6 @@
-NAME = account
+NAME = brain
 
-SRC = tests.cpp Account.cpp
+SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

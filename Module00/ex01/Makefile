@@ -14,7 +14,6 @@ all: $(NAME)
 $(NAME): $(OBJ)
 		$(COMPILE) $(OBJ) -o $(NAME)
 		@echo "Compiled!"
-		rm -rf $(OBJ)
 
 clean:
 		@echo "cleaned!"

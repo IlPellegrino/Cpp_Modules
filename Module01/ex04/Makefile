@@ -1,6 +1,6 @@
-NAME = account
+NAME = replace
 
-SRC = tests.cpp Account.cpp
+SRC = main.cpp Replace.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:46:13 by nromito           #+#    #+#             */
-/*   Updated: 2024/08/28 16:20:46 by nromito          ###   ########.fr       */
+/*   Updated: 2024/08/30 14:46:08 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ void	PhoneBook::addContact()
 
 void	PhoneBook::checker(std::string ref) {
 	if (ref.length() > 10) {
-		ref = ref.substr(0, 9) + ".";
+		ref.resize(9);
+		ref.append(".");
 	}
 	std::cout << std::setw(10) << ref;
 }
