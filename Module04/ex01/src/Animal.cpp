@@ -1,7 +1,7 @@
 #include "../include/Animal.hpp"
 
 Animal::Animal() : type("") {
-	std::cout << "ANIMAL [DEFAULT] constructor has been called\n";
+	std::cout << GREEN << "ANIMAL [DEFAULT] constructor has been called\n" << RESET;
 }
 
 Animal::Animal(const Animal& a) {
@@ -17,7 +17,7 @@ Animal&	Animal::operator=(const Animal& a) {
 }
 
 Animal::~Animal() {
-	std::cout << "ANIMAL destructor has been called\n";
+	std::cout << GREEN << "ANIMAL destructor has been called\n" << RESET;
 }
 
 void	Animal::setType(std::string type) {
