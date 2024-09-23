@@ -1,13 +1,16 @@
 #include "Fixed.hpp"
 
+// Deafult constructor
 Fixed::Fixed() : _fixedValue(0) {
 	std::cout << "Default constructor called\n";
 }
 
+// Copy constructor
 Fixed::Fixed(const Fixed& other) : _fixedValue(other._fixedValue) {
 	std::cout << "Copy constructor called\n";
 }
 
+// Copy assignment = operator overload
 Fixed& Fixed::operator=(const Fixed& other) {
 	if (this != &other) {
 		this->_fixedValue = other._fixedValue;
@@ -18,7 +21,7 @@ Fixed& Fixed::operator=(const Fixed& other) {
 
 Fixed::Fixed(int const value) {
 	std::cout << "Int constructor called\n";
-	_fixedValue = value << _fractionalBitsValue;
+	this->_fixedValue = value << this->_fractionalBitsValue;
 }
 
 Fixed::Fixed(float const value) {
@@ -27,11 +30,11 @@ Fixed::Fixed(float const value) {
 }
 
 float	Fixed::toFloat(void) const {
-	return _fixedValue >> _fractionalBitsValue;
+	return (float)this->_fixedValue / (float)(1 << this->_fractionalBitsValue);
 }
 
 int		Fixed::toInt(void) const {
-	return _fixedValue >> _fractionalBitsValue;
+	return this->_fixedValue >> this->_fractionalBitsValue;
 }
 
 void	Fixed::setRawBits(int const raw) {
@@ -43,11 +46,9 @@ int	Fixed::getRawBits(void) {
 	return this->_fixedValue;
 }
 
-// << operator
+// << operator overload
 std::ostream& operator<<(std::ostream& os, const Fixed& fix) {
-	float floatValue = static_cast<float>(fix._fixedValue) / (1 << Fixed::_fractionalBitsValue);
-
-	os << floatValue;
+	os << fix.toFloat();
 
 	return os;
 }

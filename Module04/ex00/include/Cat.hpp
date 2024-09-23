@@ -13,3 +13,13 @@ class	Cat : public Animal {
 
 		void	makeSound() const;
 };
+
+class	WrongCat : public WrongAnimal {
+	public:
+		WrongCat();
+		WrongCat(const WrongCat& c);
+		WrongCat&	operator=(const WrongCat& c);
+		~WrongCat();
+
+		void	makeSound() const;
+};

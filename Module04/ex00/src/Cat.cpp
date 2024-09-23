@@ -22,3 +22,26 @@ Cat::~Cat() {
 void	Cat::makeSound() const {
 	std::cout << "Meowing... Meow! Meow!\n";
 }
+
+WrongCat::WrongCat() : WrongAnimal() {
+	setType("");
+	std::cout << "WrongCat DEFAULT constructor has been called\n";
+}
+
+WrongCat::WrongCat(const WrongCat& c) : WrongAnimal(c) {
+	*this = c;
+	std::cout << "WrongCat COPY constructor has been called\n";
+}
+
+WrongCat&	WrongCat::operator=(const WrongCat& c) {
+	this->type = c.type;
+	return *this;
+}
+
+WrongCat::~WrongCat() {
+	std::cout << "WrongCat destructor has been called\n";
+}
+
+void	WrongCat::makeSound() const {
+	std::cout << "Meowing... Meow! Meow!\n";
+}

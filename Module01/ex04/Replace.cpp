@@ -37,6 +37,12 @@ void	Replace::replaceFile(char **argv) {
 		oFile << line << std::endl;
 	}
 
+
+	// std::ostringstream oss;
+	// oss << file.rdbuf();
+	// std::string wholeFile = oss.str();
+	// file.close();
+
 	iFile.close();
 	oFile.close();
 

@@ -31,12 +31,12 @@ void	ScavTrap::attack(const std::string& target) {
 	if (!this->getEnergyPoints()) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
-	} else if (!this->getHitPoints()) {
+	} else if (this->getHitPoints() <= 0) {
 		std::cout << BLUE << this->getName() << YELLOW << " died! Rest in peace...\n" << RESET;
 	}
 	std::cout << YELLOW << "ScavTrap " << BLUE << this->getName() << YELLOW << " attacks " << GREEN << target;
 	std::cout << YELLOW << ", causing " << RED << this->getAttackDamage() << YELLOW << " points of damage!\n" << RESET;
-	this->setEnergyPoints(getEnergyPoints() - 1);
+	this->setEnergyPoints(getEnergyPoints() - 10);
 	std::cout << this->getName() << " has now " << this->getEnergyPoints() << " energy points\n";
 }
 

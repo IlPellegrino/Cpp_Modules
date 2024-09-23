@@ -4,6 +4,7 @@
 # include <string>
 # include <cmath>
 
+
 class Harl {
 	private:
 		void	debug(void);

@@ -65,19 +65,19 @@ Fixed&	Fixed::operator=(const Fixed& fix) {
 }
 
 Fixed	Fixed::operator+(const Fixed& fix) {
-	return this->toFloat() + fix.toFloat();
+	return (this->toFloat() + fix.toFloat());
 }
 
 Fixed	Fixed::operator-(const Fixed& fix) {
-	return this->toFloat() - fix.toFloat();
+	return (this->toFloat() - fix.toFloat());
 }
 
 Fixed	Fixed::operator*(const Fixed& fix) {
-	return this->toFloat() * fix.toFloat();
+	return (this->toFloat() * fix.toFloat());
 }
 
 Fixed	Fixed::operator/(const Fixed& fix) {
-	return this->toFloat() / fix.toFloat();
+	return (this->toFloat() / fix.toFloat());
 }
 
 // PRE INCREMENT/DECREMENT
