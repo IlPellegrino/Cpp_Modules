@@ -29,13 +29,21 @@ void	PresidentialPardonForm::makePardon() const {
 	std::cout << getTarget() << " has been pardoned by Zaphod Beeblebrox.\n";
 }
 
-void	PresidentialPardonForm::execute(const Bureaucrat& executor)  const{
-	checkGrade(executor.getGrade());
-	if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
-		throw Form::GradeTooLowException();
+void	PresidentialPardonForm::execute(const Bureaucrat& executor)  const {
+	try {
+		checkGrade(executor.getGrade());
+		if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
+			throw Form::GradeTooLowException();
+		}
+		if (this->getIsSigned() == false) {
+			throw Form::FormNotSignedException();
+		}
+		makePardon();
+	} catch (Form::GradeTooHighException& high) {
+		std::cerr << "Exception: " << high.what() << std::endl << "Robotomy failed -> :(\n";
+	} catch (Form::GradeTooLowException& low) {
+		std::cerr << "Exception: " << low.what() << std::endl << "Robotomy failed -> :(\n";	
+	} catch (Form::FormNotSignedException& sign) {
+		std::cerr << "Exception: " << sign.what() << std::endl << "Robotomy failed -> :(\n";	
 	}
-	if (this->getIsSigned() == false) {
-		throw Form::FormNotSignedException();
-	}
-	makePardon();
 }

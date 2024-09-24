@@ -29,14 +29,22 @@ std::string	ShrubberyCreationForm::getTarget() const {
 
 void	ShrubberyCreationForm::execute(const Bureaucrat& executor) const 
 {
-	checkGrade(executor.getGrade());
-	if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
-		throw Form::GradeTooLowException();
+    try {
+        checkGrade(executor.getGrade());
+        if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
+            throw Form::GradeTooLowException();
+        }
+        if (this->getIsSigned() == false) {
+            throw  Form::FormNotSignedException();
+        }
+        makeTrees();
+    } catch (Form::GradeTooHighException& high) {
+		std::cerr << "Exception: " << high.what() << std::endl << "Robotomy failed -> :(\n";
+	} catch (Form::GradeTooLowException& low) {
+		std::cerr << "Exception: " << low.what() << std::endl << "Robotomy failed -> :(\n";	
+	} catch (Form::FormNotSignedException& sign) {
+		std::cerr << "Exception: " << sign.what() << std::endl << "Robotomy failed -> :(\n";	
 	}
-	if (this->getIsSigned() == false) {
-		throw  Form::FormNotSignedException();
-	}
-	makeTrees();
 }
 
 void	ShrubberyCreationForm::makeTrees() const {

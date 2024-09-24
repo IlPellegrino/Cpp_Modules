@@ -1,0 +1,17 @@
+{
+	"configurations": [
+	{
+		"name": "(gdb) Launch",
+		"type": "cppdbg",
+		"request": "launch",
+		"program": "${workspaceFolder}/Burro",
+		"args": [],
+		"stopAtEntry": false,
+		"cwd": "${fileDirname}",
+		"environment": [],
+		"externalConsole": false,
+		"miDebuggerPath": "/usr/bin/gdb"
+	
+	}
+	]
+}
