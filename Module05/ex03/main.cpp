@@ -1,7 +1,6 @@
 #include "include/Bureaucrat.hpp"
 #include "include/Intern.hpp"
 #include "include/Form.hpp"
-#include <iostream>
 
 int	main()
 {
