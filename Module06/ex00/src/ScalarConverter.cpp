@@ -7,6 +7,7 @@
 #include <ios>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 ScalarConverter::ScalarConverter() {}
 
@@ -19,13 +20,14 @@ void	printDouble(double d)
 	float f = static_cast<float>(d);
 
 	if (!c) {
-		std::cout << "Char: ciao" << c << std::endl;
+		std::cout << "Char: impossible" << c << std::endl;
 	} else {
 		std::cout << "Char: " << c << std::endl;
 	}
+	// if ()
 	std::cout << "Int: " << i << std::endl;
-	std::cout << "Float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
-	std::cout << "Double: " << std::fixed << std::setprecision(1) << d << std::endl;
+	std::cout << "Float: " << std::fixed << std::setprecision(3) << f << "f" << std::endl;
+	std::cout << "Double: " << std::fixed << std::setprecision(3) << d << std::endl;
 }
 
 void	printFloat(float f)
@@ -40,8 +42,8 @@ void	printFloat(float f)
 		std::cout << "Char: " << c << std::endl;
 	}
 	std::cout << "Int: " << i << std::endl;
-	std::cout << "Float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
-	std::cout << "Double: " << std::fixed << std::setprecision(1) << d << std::endl;
+	std::cout << "Float: " << std::fixed << std::setprecision(3) << f << "f" << std::endl;
+	std::cout << "Double: " << std::fixed << std::setprecision(3) << d << std::endl;
 }
 
 void	printChar(char c)
@@ -67,69 +69,119 @@ void	printInt(int num)
 	std::cout << "Double: " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
-void	printImpossible()
+bool	isDisplayable(std::string toConvert)
 {
-	std::cout << "Char: impossible" << std::endl;
-	std::cout << "Int: impossible" << std::endl;
-	std::cout << "Float: impossible" << std::endl;
-	std::cout << "Double: impossible" << std::endl;
+	size_t	toConvertLength = toConvert.length();
+	bool	dotPresent = false;
+
+	// For empty string
+	if (toConvertLength == 0)
+		return false;
+
+	for (int i = 0; toConvert[i]; i++)
+	{
+		char	strPos = toConvert[i];
+
+		// + or - only in the first position
+		if (i == 0 && (strPos == '+' || strPos == '-'))
+			continue;
+
+		if (strPos == '.')
+		{
+			// it can continue only if the '.' is surrounded by digits
+			if (!dotPresent && (isdigit(toConvert[i - 1])) && isdigit(toConvert[i + 1]))
+			{
+				dotPresent = true;
+				continue;
+			}
+			else {
+				return false;
+			}
+		}
+		if (strPos == 'f')
+		{
+			if ((i != (int)toConvertLength && !isdigit(toConvert[i - 1])) || toConvertLength == 1)
+				return false;
+
+			continue;
+		}
+		if (!isdigit(strPos))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
-int	displayable(char toSee)
+void	printResult(std::string toChar, std::string toInt, std::string toFloat, std::string toDouble)
 {
-	if ((toSee < '0' && toSee > '9')
-		|| (toSee != '-' && toSee != '+')
-		|| (toSee < 'a' && toSee > 'z')
-		|| (toSee < 'A' && toSee > 'Z'))
-		return 0;
-	return 1;
+	std::cout << "Char: " << toChar << std::endl;
+	std::cout << "Int: " << toInt << std::endl;
+	std::cout << "Float: " << toFloat << std::endl;
+	std::cout << "Double: " << toDouble << std::endl;
 }
 
 void	ScalarConverter::convert(std::string toConvert)
 {
-	//check if char
-	if (toConvert.size() == 1) {
-		if ((toConvert[0] >= 'a' && toConvert[0] <= 'z')
-			|| (toConvert[0] >= 'A' && toConvert[0] <= 'Z')) {
+	int		convertedInt;
+	float	convertedFloat;
+	double	convertedDouble;
+
+	if (toConvert == "nan" || toConvert == "nanf")
+	{
+		printResult("impossible", "Impossible", "nanf", "nan");
+		return;
+	}
+	if (toConvert == "-inff" || toConvert == "+inff")
+	{
+		printResult("impossible", "Impossible", toConvert, toConvert.substr(0, 4));
+		return;
+	}
+	if (toConvert == "-inf" || toConvert == "+inf")
+	{
+		printResult("impossible", "Impossible", toConvert + "f", toConvert);
+		return;
+	}
+
+	if (toConvert.length() == 1 && !isdigit(toConvert[0]))
+	{
+		// CHAR CASE
+		if (toConvert[0] >= 32 && toConvert[0] <= 127) {
 			printChar(toConvert[0]);
 			return;
 		}
-		else if (toConvert[0] >= '0' && toConvert[0] <= '9') {
-			char *c;
-			int num = std::strtol(toConvert.c_str(), &c, 10);
-			if (c == toConvert.c_str() || *c != '\0') {
-				printImpossible();
-				return;
-			}
-			printInt(num);
+	}
+
+	if (!isDisplayable(toConvert)) {
+		std::cerr << "Invalid input\n";
+		return;
+	}
+
+	if (toConvert.length() > 1 && toConvert[toConvert.length()] == 'f') {
+		// FLOAT CASE
+		std::stringstream toFloat(toConvert);
+		if (!(toFloat >> convertedFloat)) {
+			std::cerr << "Input [" << toConvert << "] could not be parsed, or there is an overflow\n";
 			return;
 		}
+		printFloat(convertedFloat);
 	}
-
-	// if (!displayable(toConvert[0])) {
-	// 	std::cout << "ciao";
-	// 	printImpossible();
-	// 	return;
-	// }
-	
-	char *test;
-	double k = std::strtod(toConvert.c_str(), &test);
-	if (test == toConvert.c_str() || *test != '\0') {
-		printImpossible();
-		return;
-	} else {
-		printDouble(k);
-		return;
+	else if (toConvert.find('.') != std::string::npos) {
+		// DOUBLE CASE
+		std::stringstream toDouble(toConvert);
+		if (!(toDouble >> convertedDouble)) {
+			std::cerr << "Input [" << toConvert << "] could not be parsed, or there is an overflow\n";
+			return;
+		}
+		printDouble(convertedDouble);
 	}
-
-	test = NULL;
-	float j = std::strtof(toConvert.c_str(), &test);
-	if (test == toConvert.c_str() || *test != '\0') {
-		printImpossible();
-		return;
-	} else {
-		printFloat(j);
-		return;
+	else {
+		// INTEGER CASE
+		std::stringstream toInt(toConvert);
+		if (!(toInt >> convertedInt)) {
+			std::cerr << "Input [" << toConvert << "] could not be parsed, or there is an overflow\n";
+			return;
+		}
+		printInt(convertedInt);
 	}
-
 }
