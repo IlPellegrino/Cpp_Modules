@@ -1,30 +1,55 @@
-#include "include/Array.hpp"
-#include <exception>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "include/Array.hpp"
 
-int	main()
+#define MAX_VAL 750
+int main(int, char**)
 {
-	Array<int> empty;
+    Array<int> numbers(MAX_VAL);
+    int* mirror = new int[MAX_VAL];
+    srand(time(NULL));
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        const int value = rand();
+        numbers[i] = value;
+        mirror[i] = value;
+    }
+    //SCOPE
+    {
+        Array<int> tmp = numbers;
+        Array<int> test(tmp);
+    }
 
-	unsigned int	i = 5;
-	int	gino[6] = {0, 1, 2, 3, 4, 5};
- 
-	Array<int>	full(i);
-	
-	std::cout << "First Test\n-----------------------------------\n\n";
-	for (unsigned int j = 0; j < i; j++) {
-		full[j] = gino[j];
-		if (full[j] == gino[j]) {
-			std::cout << "Full is " << full[j] << " as gino is " << gino[j] << std::endl;
-		}
-	}
-	std::cout << "-----------------------------------\n\nSecond Test\n-----------------------------------\n\n";
-	try {
-		std::cout << full[full.size() + 1] << "exist!!!\n";
-	} catch (std::exception & ex) {
-		std::cout << "Exception error: " << ex.what() << std::endl;
-	}
-	std::cout << "-----------------------------------\n\n";
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        if (mirror[i] != numbers[i])
+        {
+            std::cerr << "didn't save the same value!!" << std::endl;
+            return 1;
+        }
+    }
+    try
+    {
+        numbers[-2] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        numbers[MAX_VAL] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 
-	return 0;
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        numbers[i] = rand();
+    }
+    delete [] mirror;//
+    return 0;
 }

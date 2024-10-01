@@ -15,12 +15,12 @@ void	swap(T& a, T& b)
 template <typename T>
 class	Array {
 	private:
-		T*	_arr;
-		unsigned int	_size;
+		T*		_arr;
+		size_t	_size;
 
 	public:
 		Array();
-		Array(unsigned int& n);
+		Array(size_t n);
 		Array(const Array<T>& a);
 		Array&	operator=(Array<T>& a);
 		T&	operator[](unsigned int index);
@@ -61,7 +61,7 @@ template <typename T>
 Array<T>::Array() : _arr(NULL), _size(0) {}
 
 template <typename T>
-Array<T>::Array(unsigned int& n) : _arr(NULL), _size(n) {
+Array<T>::Array(size_t n) : _arr(NULL), _size(n) {
 	_arr = new T[_size];
 }
 
