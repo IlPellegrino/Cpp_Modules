@@ -1,6 +1,7 @@
 #include "../include/Span.hpp"
 #include <algorithm>
 #include <cstddef>
+#include <cstdlib>
 #include <iostream>
 #include <exception>
 #include <limits>
@@ -34,6 +35,17 @@ void	Span::addNumber(int n)
 		throw std::overflow_error("Cannot add number.\nSpan is full\n");
 	}
 	numbers.push_back(n);
+	std::cout << "Number " << n << " has been added to the list\n";
+}
+
+void	Span::addMoreNumbers(int numbers)
+{
+	if (numbers <= 0) {
+		throw std::logic_error("Cannot add this quantity of numbers\n");
+	}
+	for (int i = 0; i < numbers; i++) {
+		addNumber(rand());
+	}
 }
 
 int	Span::shortestSpan()

@@ -18,6 +18,7 @@ class	Span {
 		unsigned int	getMaxN();
 
 		void	addNumber(int n);
+		void	addMoreNumbers(int numbers);
 		int		shortestSpan(); // return shortest gap
 		int		longestSpan(); // return longest gap
 
