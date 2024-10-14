@@ -1,6 +1,6 @@
 NAME = btc
 
-SRC = main.cpp BitcoinExchange.cpp
+SRC = main.cpp src/BitcoinExchange.cpp
 
 COMPILE = c++ -Wall -Wextra -Werror -g -std=c++98
 
