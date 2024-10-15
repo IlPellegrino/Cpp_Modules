@@ -1,4 +1,5 @@
 #include "../include/BitcoinExchange.hpp"
+#include <algorithm>
 #include <cstddef>
 #include <cstdlib>
 #include <ctime>
@@ -14,55 +15,58 @@ BitcoinExchange::BitcoinExchange() {
 	}
 
 	std::string	line;
-	iterator	dbIt;
 
 	while (std::getline(data, line)) {
 		size_t pos = line.find(",");
 		if (pos == std::string::npos) {
 			throw InvalidFormat();
 		}
-		setDate(line.substr(0, pos));
+		date = stringToDate(line.substr(0, pos));
 		setValue(line.substr(pos + 1, line.size()));
 		this->DataBaseBtc[date] = value;
 	}
-
-	// for (dbIt = DataBaseBtc.begin(); dbIt != DataBaseBtc.end(); dbIt++) {
-	// 	std::cout << "key " << dbIt->first << " value: " << dbIt->second << std::endl;
-	// }
-
-	std::cout << "Constructor called\n";
 }
 
 BitcoinExchange::~BitcoinExchange() {}
 
-void	BitcoinExchange::setDate(std::string dateToSet) {
-	if (isValidDate(dateToSet) == false) {
-		return;
-	}
-	date = dateToSet;
+void	BitcoinExchange::setValue(const std::string& valueToSet) {
+	value = std::atof(valueToSet.c_str());
 }
 
-void	BitcoinExchange::setValue(std::string valueToSet) {
-	value = std::atof(valueToSet.c_str());
+float	BitcoinExchange::getResult(const time_t& closestDate, float rate) {
+	return DataBaseBtc[closestDate] * rate;
 }
 
 const char*	BitcoinExchange::InvalidFormat::what() const throw() {
 	return "Invalid Format\nUsage for date: YYYY-MM-DD\nValue must be between 0 and 1000\n";
 }
 
-bool	BitcoinExchange::isValidDate(const std::string& date) {
-	if (date.length() != 10 || date[4] != '-' || date[7] != '-') {
-		return false;
+time_t	BitcoinExchange::findClosestDate(const time_t& targetTime) {
+
+	iterator dbIt = DataBaseBtc.lower_bound(targetTime);
+
+	if (dbIt == DataBaseBtc.end()) {
+		std::cerr << "Error: date not reached, yet :)\n";
+		return 0;
+	} else if (dbIt == DataBaseBtc.begin()) {
+		std::cerr << "Error: date not found\n";
+		return 0;
 	}
+
+	time_t	closestDate = dbIt->first;
+
+	return closestDate;
+}
+
+time_t	BitcoinExchange::stringToDate(const std::string& date) {
 
 	struct	tm tm = {};
-	
 	if (strptime(date.c_str(), "%Y-%m-%d", &tm) == NULL) {
-		std::cerr << "Date format not valid\n";
-		return false;
+		std::cerr << "Error: date format not valid => " << date << std::endl;
+		return 0;
 	}
 
-	return true;
+	return mktime(&tm);
 }
 
 bool	BitcoinExchange::isValidValue(const std::string& value) {
