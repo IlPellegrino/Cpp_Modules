@@ -1,37 +1,103 @@
 #include "../include/RPN.hpp"
-#include <cctype>
-#include <cstdlib>
-#include <iostream>
-#include <iterator>
-#include <sstream>
-#include <stack>
-#include <string>
 
-RPN::RPN(std::string input) : _result(0) {
-	splitToStack(input, ' ', _calculator);
+RPN::RPN() {}
 
+RPN::RPN(const RPN& r) { (void)r; }
+
+RPN&	RPN::operator=(const RPN& r) {
+	(void)r;
+	return *this;
 }
+
+RPN::~RPN() {}
 
 const char*	RPN::InvalidTokenException::what() const throw() {
 	return "Error: invalid token\n";
 }
 
-void	RPN::splitToStack(std::string& toSplit, char toSkip, std::stack<int>& cal) {
-	std::istringstream	ss(toSplit);
-	std::string			token;
+const char* RPN::InvalidExpressionException::what() const throw() {
+	return "Error: invalid expression\n";
+}
 
-	while (std::getline(ss, token, toSkip)) {
-		if (token.size() == 1 && std::isdigit(token[0])) {
-			cal.push(std::atoi(token.c_str()));
-		} else if (token.size() == 1 && isoperand(token[0])) {
-			continue;
-		} else {
-			throw InvalidTokenException();
-		}
+float	RPN::parseNumber(const std::string& token)
+{
+	char	*end;
+
+	float number = std::strtof(token.c_str(), &end);
+
+	if (end == token.c_str() || !end || *end != '\0') {
+		throw RPN::InvalidTokenException();
+	}
+	return number;
+}
+
+float	RPN::doOperation(float n1, float n2, const char op)
+{
+	if (op == '+') {
+		return n1 + n2;
+	} else if (op == '-') {
+		return n1 - n2;
+	} else if (op == '*') {
+		return n1 * n2;
+	} else if (op == '/') {
+		return n1 / n2;
+	} else {
+		throw InvalidExpressionException();
 	}
 }
 
-bool	RPN::isoperand(char c)
+
+float	RPN::splitToStack(const std::string& input) {
+	if (input.empty()) {
+		throw InvalidTokenException();
+	}
+
+	std::stack<float>	operands;
+
+	std::stringstream	stream(input);
+
+	std::string			token;
+
+	while (stream >> token)
+	{
+		bool	isNumber = false;
+		float number = -1;
+		try {
+			number = parseNumber(token);
+			isNumber = true;
+		} catch (std::exception& e) {(void)e;}
+
+		if (token.size() == 1 && isoperator(token[0])) {
+			if (operands.size() < 2) {
+				throw InvalidExpressionException();
+			}
+			float n1 = operands.top();
+			operands.pop();
+
+			float n2 = operands.top();
+			operands.pop();
+
+			float result = RPN::doOperation(n1, n2, token[0]);
+			operands.push(result);
+		}
+		else if (isNumber) {
+			if (number < 0 || number > 1000) {
+				throw InvalidTokenException();
+			}
+			operands.push(number);
+		}
+		else {
+			throw InvalidTokenException();
+		}
+	}
+	if (operands.size() != 1) {
+		throw InvalidExpressionException();
+	}
+
+	return operands.top();
+}
+
+bool	RPN::isoperator(const char c)
 {
 	if (c == '+' || c == '-' || c == '/' || c == '*') {
 		return true;

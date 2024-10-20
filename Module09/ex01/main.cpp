@@ -8,15 +8,13 @@ int	main(int argc, char **av)
 	}
 
 	try {
-		std::string	input = std::string(av[1]);
-		RPN	rpn(input);
-		if (rpn.doOperation() == -1) {
-			return 1;
-		}
-		rpn.printResult();
+		float result = RPN::splitToStack(av[1]);
+		std::cout << "Result: " << result << std::endl;
 	} catch (RPN::InvalidTokenException& c) {
 		std::cerr << c.what();
+	} catch (RPN::InvalidExpressionException& e) {
+		std::cerr << e.what();
 	}
 
-
+	return 0;
 }
