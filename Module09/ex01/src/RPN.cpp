@@ -1,4 +1,5 @@
 #include "../include/RPN.hpp"
+#include <cmath>
 
 RPN::RPN() {}
 
@@ -81,7 +82,7 @@ float	RPN::splitToStack(const std::string& input) {
 			operands.push(result);
 		}
 		else if (isNumber) {
-			if (number < 0 || number > 1000) {
+			if (number < 0 || number > 9) {
 				throw InvalidTokenException();
 			}
 			operands.push(number);
