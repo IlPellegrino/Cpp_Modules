@@ -1,4 +1,5 @@
 #include "../include/PmergeMe.hpp"
+#include <cctype>
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
@@ -6,6 +7,8 @@
 #include <sstream>
 #include <utility>
 #include <vector>
+
+// CONSTRUCTORS
 
 PmergeMe::PmergeMe() {}
 
@@ -22,11 +25,17 @@ const char*	PmergeMe::InvalidTokenException::what() const throw() {
 	return "Error: invalid token\n";
 }
 
+// VECTOR ALGORITHM
 
 int	PmergeMe::parseNumber(const std::string& token)
 {
+	for (int i = 0; token[i]; i++) {
+		if (!std::isdigit(token[i])) {
+			throw InvalidTokenException();
+		}
+	}
 	int	number = atoi(token.c_str());
-	if (!number || token.empty())
+	if (token.empty())
 		throw InvalidTokenException();
 	return number;
 }
@@ -38,7 +47,7 @@ void	PmergeMe::startPairing(char **av, int n)
 	if (n == 1) //one arg
 	{
 		std::vector<int>	arr;
-		
+
 		std::string numbers = std::string(av[1]);
 
 		std::stringstream	stream(numbers);
@@ -74,7 +83,7 @@ void	PmergeMe::startPairing(char **av, int n)
 				_struggler = atoi(av[i]);
 			}
 		}
-	}
+	} 
 	mergeInPairs(pairs);
 	
 }
