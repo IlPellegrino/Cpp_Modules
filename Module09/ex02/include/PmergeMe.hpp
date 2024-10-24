@@ -1,16 +1,19 @@
 #pragma once
 
+#include <deque>
 #include <exception>
 #include <iostream>
 #include <utility>
 #include <vector>
 
 typedef std::vector<int>::iterator					iterator;
-typedef std::vector<std::pair<int, int>>::iterator	pair_iterator;
+typedef std::vector<std::pair<int, int> >::iterator	pair_iterator;
 
 class	PmergeMe {
 	private:
-		int _struggler;
+		std::vector<int>	_mainV;
+		std::deque<int>		_mainD;
+		int 				_struggler;
 		
 	public:
 		PmergeMe();
@@ -28,8 +31,11 @@ class	PmergeMe {
 		// 		const char * what() const throw();
 		// };
 
-		void	startPairing(char **av, int n);
+		std::vector<int>	createJacobsthalSequence(int size);
 		int		parseNumber(const std::string& token);
-		void	mergeInPairs(std::vector<std::pair<int, int>>& pairs);
-		void	recursivePairSort(std::vector<std::pair<int, int>>& pairs, int idx, int count);
+		void	startPairing(char **av, int n);
+		void	putInMainAndPend(std::vector<std::pair<int, int> >& pairs);
+		void	merge(std::vector<std::pair<int, int> >& pairs, int left, int mid, int right);
+		void	sortInPairs(std::vector<std::pair<int, int> >& pairs);
+		void	recursivePairSort(std::vector<std::pair<int, int> >& pairs, int left, int right);
 };
