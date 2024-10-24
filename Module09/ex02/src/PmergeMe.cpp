@@ -40,9 +40,31 @@ int	PmergeMe::parseNumber(const std::string& token)
 	return number;
 }
 
+void	PmergeMe::mergeInPairs(std::vector<std::pair<int, int>>& pairs) //all pairs have now the biggest number in the first element of the pair
+{
+	for (int idx = 0; idx < pairs.size(); idx++) {
+		if (pairs[idx].first < pairs[idx].second) {
+			std::swap(pairs[idx].first, pairs[idx].second);
+		}
+	}
+}
+
+void	PmergeMe::recursivePairSort(std::vector<std::pair<int, int>>& pairs, int idx, int count)
+{
+	if (idx + 1 < pairs.size() && count < pairs.size()) {
+		if (pairs[idx].first > pairs[idx + 1].first) {
+			std::swap(pairs[idx], pairs[idx + 1]);
+		}
+		recursivePairSort(pairs, idx + 1, count + 1);
+	}
+
+	if (count < pairs.size())
+		recursivePairSort(pairs, 0, count + 1);
+}
+
 void	PmergeMe::startPairing(char **av, int n)
 {
-	std::vector<std::pair<int, int> >	pairs;
+	std::vector<std::pair<int, int>>	pairs;
 
 	if (n == 1) //one arg
 	{
@@ -85,5 +107,5 @@ void	PmergeMe::startPairing(char **av, int n)
 		}
 	} 
 	mergeInPairs(pairs);
-	
+	recursivePairSort(pairs, 0, 0);
 }

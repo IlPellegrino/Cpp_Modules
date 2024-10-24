@@ -5,7 +5,8 @@
 #include <utility>
 #include <vector>
 
-typedef std::vector<int>::iterator	iterator; 
+typedef std::vector<int>::iterator					iterator;
+typedef std::vector<std::pair<int, int>>::iterator	pair_iterator;
 
 class	PmergeMe {
 	private:
@@ -30,5 +31,5 @@ class	PmergeMe {
 		void	startPairing(char **av, int n);
 		int		parseNumber(const std::string& token);
 		void	mergeInPairs(std::vector<std::pair<int, int>>& pairs);
-		
+		void	recursivePairSort(std::vector<std::pair<int, int>>& pairs, int idx, int count);
 };
