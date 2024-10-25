@@ -3,6 +3,7 @@
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
+#include <ctime>
 #include <exception>
 #include <iterator>
 #include <sstream>
@@ -11,7 +12,7 @@
 
 // CONSTRUCTORS
 
-PmergeMe::PmergeMe() : _struggler(0) {}
+PmergeMe::PmergeMe() : _struggler(0), _oddNumber(false) {}
 
 PmergeMe::PmergeMe(const PmergeMe& p) { (void)p; }
 
@@ -27,6 +28,25 @@ const char*	PmergeMe::InvalidTokenException::what() const throw() {
 }
 
 // VECTOR ALGORITHM
+
+void printVec(std::vector<int> vec) {
+	for (size_t i = 0; i < vec.size(); i++) {
+		std::cout << vec.at(i) << " ";
+	}
+	std::cout << '\n';
+}
+
+void	PmergeMe::printAll(char **av, double vectorTime)
+{
+	std::cout << "Before: ";
+	for (int i = 1; av[i]; i++) {
+		std::cout << av[i] << " ";
+	}
+	std::cout << "\n";
+	std::cout << "After: ";
+	printVec(_mainV);
+	std::cout << "Vector time: " << vectorTime << " us\n";
+}
 
 int	PmergeMe::parseNumber(const std::string& token)
 {
@@ -55,13 +75,13 @@ void	PmergeMe::merge(std::vector<std::pair<int, int> >& pairs, int left, int mid
 	int	firstHalf = mid - left + 1;
 	int	secondHalf = right - mid;
 
-	std::vector<std::pair<int, int> >	leftV(firstHalf);
-	std::vector<std::pair<int, int> >	rightV(secondHalf);
+	std::vector<std::pair<int, int> >	leftV;
+	std::vector<std::pair<int, int> >	rightV;
 
 	for (int i = 0; i < firstHalf; i++)
-		leftV[i] = pairs[left + i];
+		leftV.push_back(pairs[left + i]);
 	for (int j = 0; j < secondHalf; j++)
-		rightV[j] = pairs[mid + 1 + j];
+		rightV.push_back(pairs[mid + 1 + j]);
 
 	int i = 0, j = 0, l = left;
 
@@ -71,7 +91,7 @@ void	PmergeMe::merge(std::vector<std::pair<int, int> >& pairs, int left, int mid
 		{
 			pairs[l] = leftV[i];
 			i++;
-		} else if (leftV[i].first > rightV[j].first) {
+		} else {
 			pairs[l] = rightV[j];
 			j++;
 		}
@@ -120,11 +140,25 @@ std::vector<int>	PmergeMe::createJacobsthalSequence(int size)
 	return jacob;
 }
 
+iterator	searchGreatestOf(std::vector<std::pair<int, int> >& pairs, std::vector<int>& main, const int toFind)
+{
+	size_t	i;
+
+	for (i = 0; i < pairs.size() -1 ; i++)
+	{
+		if (pairs[i].second == toFind)
+			break;
+	}
+
+	iterator it = std::find(main.begin(), main.end(), pairs[i].first);
+
+	return it;
+}
+
 void	PmergeMe::putInMainAndPend(std::vector<std::pair<int, int> >& pairs)
 {
 	std::vector<int>	pend;
-
-	for (size_t i = 0; i < pairs.size() + 1; i++)
+	for (size_t i = 0; i < pairs.size(); i++)
 	{
 		if (!i)
 			_mainV.push_back(pairs[i].second);
@@ -132,11 +166,21 @@ void	PmergeMe::putInMainAndPend(std::vector<std::pair<int, int> >& pairs)
 		pend.push_back(pairs[i].second);
 	}
 
+	// BINARY SEARCH //
 	std::vector<int>	jacobsthalNumbers = createJacobsthalSequence(pend.size());
-	for (size_t i = 0; i < pend.size(); i++)
+	for (size_t i = 0; i < pend.size() + 1; i++)
 	{
-		iterator it = std::lower_bound(_mainV.begin(), _mainV.end(), jacobsthalNumbers[i]);
-		_mainV.insert(it, pend[i]);
+		int	JacobIdx = jacobsthalNumbers[i] - 1;
+		if ((size_t)JacobIdx >= pend.size())
+			continue;
+		iterator it = std::lower_bound(_mainV.begin(), searchGreatestOf(pairs, _mainV, pend[JacobIdx]), pend[JacobIdx]);
+		_mainV.insert(it, pend[JacobIdx]);
+	}
+
+	// ORDER THE REMAINING NUMBER IF ODD IS TRUE //
+	if (_oddNumber == true) {
+		iterator it = std::lower_bound(_mainV.begin(), _mainV.end(), _struggler);
+		_mainV.insert(it, _struggler);
 	}
 }
 
@@ -182,6 +226,7 @@ void	PmergeMe::startPairing(char **av, int n)
 			if ((it + 1) != arr.end()) {
 				pairs.push_back(std::make_pair(*it, *(it + 1)));
 			} else if (n % 2 != 0 && (it + 1) == arr.end()) {
+				_oddNumber = true;
 				_struggler = *it;
 			}
 		}
@@ -191,14 +236,28 @@ void	PmergeMe::startPairing(char **av, int n)
 		for (int i = 1; av[i]; i += 2)
 		{
 			if (av[i + 1] != NULL) {
-				pairs.push_back(std::make_pair(atoi(av[i]), atoi(av[i + 1])));
+				int number = parseNumber(av[i]);
+				int	number2 = parseNumber(av[i + 1]);
+				pairs.push_back(std::make_pair(number, number2));
 			}
 			if (n % 2 != 0 && av[i + 1] == NULL) {
-				_struggler = atoi(av[i]);
+				int temp = parseNumber(av[i]);
+				_oddNumber = true;
+				_struggler = temp;
+				break;
 			}
 		}
 	} 
+	std::clock_t vectorStart = std::clock();
 	sortInPairs(pairs);
 	recursivePairSort(pairs, 0, pairs.size() - 1);
 	putInMainAndPend(pairs);
+	std::clock_t	vectorEnd = std::clock();
+	double vectorTime = static_cast<double>(vectorEnd - vectorStart) / (CLOCKS_PER_SEC / 1000);
+	printAll(av, vectorTime);
 }
+
+	// -------------------- //
+	//     DEQUE PART       //
+
+

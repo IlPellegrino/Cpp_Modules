@@ -14,6 +14,7 @@ class	PmergeMe {
 		std::vector<int>	_mainV;
 		std::deque<int>		_mainD;
 		int 				_struggler;
+		bool				_oddNumber;
 		
 	public:
 		PmergeMe();
@@ -32,6 +33,7 @@ class	PmergeMe {
 		// };
 
 		std::vector<int>	createJacobsthalSequence(int size);
+		void	printAll(char **av, double vectorTime); // ADD ALSO THE DEQUE TIME //
 		int		parseNumber(const std::string& token);
 		void	startPairing(char **av, int n);
 		void	putInMainAndPend(std::vector<std::pair<int, int> >& pairs);
