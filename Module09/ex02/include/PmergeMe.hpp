@@ -1,10 +1,14 @@
 #pragma once
 
+#include <cstddef>
 #include <deque>
 #include <exception>
 #include <iostream>
 #include <utility>
 #include <vector>
+
+typedef std::deque<int>::iterator					dIt;
+typedef std::deque<std::pair<int, int> >::iterator	dPairIt;
 
 typedef std::vector<int>::iterator					iterator;
 typedef std::vector<std::pair<int, int> >::iterator	pair_iterator;
@@ -27,17 +31,28 @@ class	PmergeMe {
 				const char * what() const throw();
 		};
 
-		// class	InvalidException : public std::exception {
-		// 	public:
-		// 		const char * what() const throw();
-		// };
+		class	DuplicatesFoundExceptiond : public std::exception {
+			public:
+				const char * what() const throw();
+		};
 
-		std::vector<int>	createJacobsthalSequence(int size);
-		void	printAll(char **av, double vectorTime); // ADD ALSO THE DEQUE TIME //
+		void	start(char **av, int n);
 		int		parseNumber(const std::string& token);
-		void	startPairing(char **av, int n);
-		void	putInMainAndPend(std::vector<std::pair<int, int> >& pairs);
-		void	merge(std::vector<std::pair<int, int> >& pairs, int left, int mid, int right);
+		void	printAll(char **av, int n, double vectorTime, double dequeTime); // ADD ALSO THE DEQUE TIME //
+
+		//	------------ VECTOR -------------	//
+
+		std::vector<int>	createJacobsthalSequence(size_t size);
 		void	sortInPairs(std::vector<std::pair<int, int> >& pairs);
 		void	recursivePairSort(std::vector<std::pair<int, int> >& pairs, int left, int right);
+		void	merge(std::vector<std::pair<int, int> >& pairs, int left, int mid, int right);
+		void	putInMainAndPend(std::vector<std::pair<int, int> >& pairs);
+
+		//	------------ DEQUE --------------	//
+
+		std::deque<int>	createDequeJacobsthalSequence(size_t size);
+		void	sortDequeInPairs(std::deque<std::pair<int, int> >& pairs);
+		void	recursiveDequePairSort(std::deque<std::pair<int, int> >& pairs, int left, int right);
+		void	mergeDeque(std::deque<std::pair<int, int> >& pairs, int left, int mid, int right);
+		void	putDequeInMainAndPend(std::deque<std::pair<int, int> >& pairs);
 };

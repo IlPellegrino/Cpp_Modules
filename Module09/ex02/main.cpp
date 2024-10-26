@@ -7,9 +7,10 @@ int	main(int ac, char **av)
 		return 1;
 	}
 
+	PmergeMe	algo;
+
 	try {
-		PmergeMe	algo;
-		algo.startPairing(av, ac - 1);
+		algo.start(av, ac - 1);
 	} catch (std::exception& e) {
 		std::cerr << e.what();
 	}
