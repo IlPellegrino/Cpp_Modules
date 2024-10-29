@@ -32,7 +32,7 @@ class	Fixed {
 		int		toInt() const;
 
 		// Fixed&	operator=(const Fixed& fix);
-		Fixed& operator=(const Fixed& fix);
+		Fixed&	operator=(const Fixed& fix);
 		Fixed	operator+(const Fixed& fix);
 		Fixed	operator-(const Fixed& fix);
 		Fixed	operator*(const Fixed& fix);

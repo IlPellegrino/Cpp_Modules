@@ -15,5 +15,5 @@ class	Fixed {
 		~Fixed();
 
 		void	setRawBits(int const raw);
-		int		getRawBits(void);
+		int		getRawBits(void) const;
 };
