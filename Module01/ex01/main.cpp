@@ -3,9 +3,7 @@
 
 int	main()
 {
-	Zombie* zombie = NULL;
-
-	zombie = zombie->zombieHorde(5, "Pino");
+	Zombie* zombie = zombieHorde(5, "Gianni");
 
 	delete[] zombie;
 }

@@ -3,11 +3,10 @@
 
 int	main()
 {
-	Zombie		*zombie = NULL;
-	Zombie		s_zombie;
+	Zombie		*zombie  = newZombie("carlo");
 
-	zombie = zombie->newZombie("Carlo");
 	zombie->announce();
-	s_zombie.randomChump("Fred");
+	randomChump("Lello");
+	
 	delete zombie;
 }

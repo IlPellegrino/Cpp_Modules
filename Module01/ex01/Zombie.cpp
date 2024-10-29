@@ -8,6 +8,11 @@ Zombie::~Zombie() {
 	std::cout << "The Horde is gone forever!\n";
 }
 
+void	Zombie::setName(std::string name)
+{
+	this->_name = name;
+}
+
 void	Zombie::announce(void) {
-	std::cout << this->name << ": BraiiiiiiinnnzzzZ...\n";
+	std::cout << this->_name << ": BraiiiiiiinnnzzzZ...\n";
 }
