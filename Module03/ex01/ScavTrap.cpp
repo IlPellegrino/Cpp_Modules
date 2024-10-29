@@ -34,7 +34,7 @@ void	ScavTrap::attack(const std::string& target) {
 	} else if (this->getHitPoints() <= 0) {
 		std::cout << BLUE << this->getName() << YELLOW << " died! Rest in peace...\n" << RESET;
 	}
-	std::cout << YELLOW << "ScavTrap " << BLUE << this->getName() << YELLOW << " attacks " << GREEN << target;
+	std::cout << YELLOW << "ScavTrap " << BLUE << this->getName() << YELLOW << " is attacking " << GREEN << target;
 	std::cout << YELLOW << ", causing " << RED << this->getAttackDamage() << YELLOW << " points of damage!\n" << RESET;
 	this->setEnergyPoints(getEnergyPoints() - 10);
 	std::cout << this->getName() << " has now " << this->getEnergyPoints() << " energy points\n";

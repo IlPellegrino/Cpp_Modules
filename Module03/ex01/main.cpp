@@ -13,6 +13,7 @@ int	main()
 	enemy.takeDamage(0);
 	enemy.beRepaired(10);
 
+	player2.guardGate();
 	player2.attack("Guard");
 	player2.attack("Guard");
 	player2.attack("Guard");
