@@ -1,7 +1,6 @@
-#include "include/Materia.hpp"
+#include "include/MateriaSource.hpp"
 #include "include/Ice.hpp"
 #include "include/Cure.hpp"
-#include "include/AMateria.hpp"
 #include "include/IMateria.hpp"
 #include "include/ICharacter.hpp"
 #include "include/Character.hpp"

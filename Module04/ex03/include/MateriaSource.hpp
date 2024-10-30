@@ -1,15 +1,17 @@
-#pragma once
+#ifndef MATERIASOURCE_HPP
+# define MATERIASOURCE_HPP
 
-#include "AMateria.hpp"
-# include "IMateria.hpp"
 # include <string>
+
+# include "IMateria.hpp"
 
 	// STANDARD CLASS //
 
 class	MateriaSource : public IMateriaSource
 {
 	private:
-		AMateria	*_knowledge[4];
+		static const int	N = 4;
+		AMateria	*_knowledge[N];
 
 
 	public:
@@ -24,3 +26,5 @@ class	MateriaSource : public IMateriaSource
 		void		learnMateria(AMateria* m);
 		AMateria*	createMateria(std::string const & type);
 };
+
+#endif

@@ -1,15 +1,22 @@
 #pragma once
 
 # include <string>
+
+# include "ICharacter.hpp"
 # include "AMateria.hpp"
-# include "Materia.hpp"
+// # include "Materia.hpp"
 
 	// STANDARD CLASS //
 
 class	Character : public ICharacter {
 	private:
+		static const int	N = 4;
+		static const int	INV = 40;
+
+	private:
 		std::string		_name;
-		AMateria	*_slots[4];
+		AMateria*		_slots[N];
+		AMateria*		_voidSlots[INV];
 		// ice [0] 
 		// use idx target
 		// slots[0].use(target); use ** std::cout << balab << target.getName()

@@ -8,7 +8,7 @@ Character::Character(const Character& c) {
 
 Character&	Character::operator=(const Character& c) {
 	this->_name = c._name;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < N; i++) {
 		this->_slots[i] = c._slots[i];
 	}
 	return *this;
@@ -21,7 +21,7 @@ std::string const &	Character::getName() {
 }
 
 void	Character::equip(AMateria* m) {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < N; i++) {
 		if (!this->_slots[i]) {
 			std::cout << "Materia " << m->getType() << " equipped\n";
 			this->_slots[i] = m;
@@ -32,10 +32,35 @@ void	Character::equip(AMateria* m) {
 }
 
 void	Character::unequip(int idx) {
-	if (idx < 0 || idx >= 4) {
+	if (idx < 0 || idx >= N) {
 		std::cerr << "Slot does not exists\n";
 		return;
 	}
-	this->_slots[idx] = NULL;
-	// add a function to store the materias somewhere else when unequipped
+	AMateria*	m = this->_slots[idx];
+
+	if (!m) {
+		std::cerr << "Slot is empty\n";
+		return;
+	} else {
+		for (int i = 0; i < INV; i++) {
+			if (!_voidSlots[i]) {
+				_voidSlots[i] = m;
+				this->_slots[idx] = NULL;
+			}
+		}
+		std::cerr << "The floor is full of Materias\n";
+	}
+}
+
+void	Character::use(int idx, ICharacter& target) {
+	if (idx < 0 || idx >= INV) {
+		std::cerr << "Slot does not exists\n";
+		return;
+	}
+	AMateria*	m = this->_slots[idx];
+	if (!m) {
+		std::cerr << "Slot is empty!\n";
+	} else {
+		m->use(target);
+	}
 }

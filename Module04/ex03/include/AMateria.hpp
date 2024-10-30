@@ -1,7 +1,10 @@
 #pragma once
 
-# include "ICharacter.hpp"
 # include <iostream>
+
+# include "ICharacter.hpp"
+
+class	ICharacter;
 
 	// ABSTRACT CLASS //
 
@@ -15,7 +18,7 @@ class AMateria
 		AMateria(std::string const & type);
 		AMateria(const AMateria& m);
 		AMateria&	operator=(const AMateria& m);
-		~AMateria();
+		virtual ~AMateria();
 
 		virtual AMateria*	clone() const = 0;
 		void				setType(std::string const & type);

@@ -1,4 +1,4 @@
-#include "../include/Materia.hpp"
+#include "../include/MateriaSource.hpp"
 #include "../include/AMateria.hpp"
 #include <cmath>
 #include <string>
@@ -26,21 +26,30 @@ void	AMateria::setType(std::string const & type) {
 	this->_type = type;
 }
 
-	// INTERFACE CLASS //
-
-
-
 	// MATERIASOURCE CLASS //
 
-MateriaSource::MateriaSource() {}
+MateriaSource::MateriaSource() {
+	for (int i = 0; i < N; i++) {
+		this->_knowledge[i] = NULL;
+	}
+}
 
 MateriaSource::MateriaSource(const MateriaSource& ms) {
-	*this = ms;
+	for (int i = 0; i < N; i++) {
+		this->_knowledge[i] = NULL;
+		if (ms._knowledge[i]) {
+			this->_knowledge[i] = ms._knowledge[i];
+		}
+	}
 }
 
 MateriaSource&	MateriaSource::operator=(const MateriaSource& ms) {
-	for (int i = 0; i < 4; i++) {
-		this->_knowledge[i] = ms._knowledge[i];
+	if (this == &ms)
+		return *this;
+	for (int i = 0; i < N; i++) {
+		this->_knowledge[i] = NULL;
+		if (ms._knowledge[i])
+			this->_knowledge[i] = ms._knowledge[i];
 	}
 	return *this;
 }
@@ -48,5 +57,17 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& ms) {
 MateriaSource::~MateriaSource() {}
 
 void	MateriaSource::learnMateria(AMateria* m) {
-
+	if (!m) {
+		std::cerr << "Materia cannot be learned. (NULL)\n";
+		return;
+	}
+	for (int i = 0; i < N; i++) {
+		if (!this->_knowledge[i]) {
+			std::cout << "The materia " << m->getType() << " has been learned.\n";
+			this->_knowledge[i] = m;
+			return;
+		}
+	}
+	std::cerr << "there is no space for materia " << m->getType() << ", will be delete now\n";
+	delete m;
 }
