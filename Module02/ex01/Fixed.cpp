@@ -37,7 +37,7 @@ int		Fixed::toInt(void) const {
 	return this->_fixedValue >> this->_fractionalBitsValue;
 }
 
-void	Fixed::setRawBits(int const raw) {
+void	Fixed::setRawBits(int const &raw) {
 	this->_fixedValue = raw;
 }
 

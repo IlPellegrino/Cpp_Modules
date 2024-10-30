@@ -1,6 +1,9 @@
 #include "../include/ScavTrap.hpp"
 
-ScavTrap::ScavTrap() : ClapTrap(this->getName()) {
+ScavTrap::ScavTrap() : ClapTrap("scavTrapDefault") {
+	this->setAttackDamage(20);
+	this->setEnergyPoints(50);
+	this->setHitPoints(100);
 	std::cout << "ScavTrap [DEFAULT] constructor called\n";
 }
 
@@ -8,17 +11,17 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
 	this->setAttackDamage(20);
 	this->setEnergyPoints(50);
 	this->setHitPoints(100);
-	std::cout << "ScavTrap [" << this->getName() << "] constructor called\n";
+	std::cout << "ScavTrap [NAME] constructor called\n";
 }
 
-ScavTrap::ScavTrap(const ScavTrap& st) : ClapTrap(this->getName()) {
+ScavTrap::ScavTrap(const ScavTrap& st) : ClapTrap(st._name) {
 	*this = st;
 	std::cout << "ScavTrap [COPY] constructor called\n";
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& st) {
-	this->setEnergyPoints(st.getEnergyPoints());
 	this->setAttackDamage(st.getAttackDamage());
+	this->setEnergyPoints(st.getEnergyPoints());
 	this->setHitPoints(st.getHitPoints());
 	return *this;
 }

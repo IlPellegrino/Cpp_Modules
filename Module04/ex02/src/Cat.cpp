@@ -7,12 +7,25 @@ Cat::Cat() : Animal() {
 }
 
 Cat::Cat(const Cat& c) : Animal(c) {
-	*this = c;
+	this->type = c.type;
+	if (c.brain){
+		this->brain = new Brain(*c.brain);
+	} else {
+		this->brain = NULL;
+	}
 	std::cout << RED << "CAT COPY constructor has been called\n" << RESET;
 }
 
 Cat&	Cat::operator=(const Cat& c) {
 	this->type = c.type;
+	if (this->brain){
+		delete brain;
+	}
+	if (c.brain){
+		this->brain = new Brain(*c.brain);
+	} else {
+		this->brain = NULL;
+	}
 	return *this;
 }
 

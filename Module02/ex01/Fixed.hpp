@@ -21,9 +21,9 @@ class	Fixed {
 		float	toFloat(void) const;
 		int		toInt(void) const;
 
-		void	setRawBits(int const raw);
+		void	setRawBits(int const &raw);
 		int		getRawBits(void);
 		
 };
 
-	std::ostream& operator<<(std::ostream& os, const Fixed& fix);
+std::ostream& operator<<(std::ostream& os, const Fixed& fix);

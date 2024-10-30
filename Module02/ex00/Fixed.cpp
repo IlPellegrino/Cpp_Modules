@@ -13,11 +13,11 @@ Fixed& Fixed::operator=(const Fixed& other) {
 		this->_fixedPointNumber = other._fixedPointNumber;
 	}
 	std::cout << "Copy assignment operator called\n";
-	this->getRawBits();
+	// this->getRawBits();
 	return *this;
 }
 
-void	Fixed::setRawBits(int const raw) {
+void	Fixed::setRawBits(int const &raw) {
 	this->_fixedPointNumber = raw;
 }
 

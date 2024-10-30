@@ -14,7 +14,7 @@ DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), Scav
 	std::cout << "DiamondTrap " << this->getAttackDamage() << " Attack Damage\n";
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap& dt) : ClapTrap(this->getName()) {
+DiamondTrap::DiamondTrap(const DiamondTrap& dt) : ClapTrap(dt._name) {
 	*this = dt;
 	std::cout << "DiamondTrap [COPY] constructor called\n";
 }
@@ -34,6 +34,6 @@ void	DiamondTrap::whoAmI() {
 	std::cout << YELLOW << "But my second or parent name is " << BLUE << ClapTrap::getName() << RESET << std::endl;
 }
 
-// void	DiamondTrap::attack(const std::string& target) {
-// 	ScavTrap::attack(target);
-// }
+void	DiamondTrap::attack(const std::string& target) {
+	ScavTrap::attack(target);
+}
