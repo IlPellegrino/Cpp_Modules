@@ -1,6 +1,6 @@
 NAME = animals
 
-SRC = main.cpp src/Animal.cpp src/Dog.cpp src/Cat.cpp src/Brain.cpp
+SRC = main.cpp src/Character.cpp src/Materia.cpp src/Cure.cpp src/Ice.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -25,6 +25,6 @@ fclean: clean
 
 re: fclean all
 
-.SILENT:
-
 .PHONY: all clean fclean
+
+.SILENT:

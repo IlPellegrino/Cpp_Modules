@@ -1,7 +1,8 @@
 #pragma once
 
 # include <string>
-# include "Materia.hpp"
+# include <iostream>
+# include "AMateria.hpp"
 
 class	Ice : public AMateria {
 	public:
@@ -10,4 +11,6 @@ class	Ice : public AMateria {
 		Ice&	operator=(const Ice& i);
 		~Ice();
 
+		void		use(ICharacter& target);
+		AMateria*	clone() const;
 };

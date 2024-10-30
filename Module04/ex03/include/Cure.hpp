@@ -1,8 +1,8 @@
 #pragma once
 
 # include <string>
-#include "Character.hpp"
-# include "Materia.hpp"
+# include "AMateria.hpp"
+
 
 class	Cure : public AMateria {
 	public:
@@ -13,4 +13,4 @@ class	Cure : public AMateria {
 
 		void		use(ICharacter& target);
 		AMateria*	clone() const;
-}
+};
