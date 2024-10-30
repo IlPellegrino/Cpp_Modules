@@ -1,4 +1,5 @@
 #include "Replace.hpp"
+#include <cstddef>
 
 Replace::Replace() {}
 
@@ -6,8 +7,13 @@ Replace::~Replace() {}
 
 void	Replace::replaceFile(char **argv) {
 	std::string		originalFname(argv[1]);
-	std::string		s1 = argv[2];
+	std::string		s1 = std::string(argv[2]);
 	std::string		s2 = argv[3];
+
+	if (s1 == s2 || s1.empty() || s2.empty()) {
+		std::cerr << "args cannot be empty\n";
+		return;
+	}
 
 	std::ifstream	iFile(originalFname.c_str());
 	if (!iFile.is_open()) {
