@@ -4,6 +4,8 @@
 
 # include "AMateria.hpp"
 
+class	AMateria;
+
 	// INTERFACE //
 
 class ICharacter

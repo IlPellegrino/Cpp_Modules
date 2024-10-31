@@ -1,13 +1,12 @@
 #include "../include/Cure.hpp"
+#include "../include/AMateria.hpp"
 #include <iostream>
 
-Cure::Cure() {
-	std::cout << "Cure\n";
+Cure::Cure() : AMateria("cure") {
+	std::cout << "cure\n";
 }
 
-Cure::Cure(const Cure& c) {
-	*this = c;
-}
+Cure::Cure(const Cure& c) : AMateria(c.getType()) {}
 
 Cure&	Cure::operator=(const Cure& c) {
 	this->_type  = c._type;

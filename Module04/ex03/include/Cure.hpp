@@ -1,9 +1,7 @@
 #pragma once
 
 # include <string>
-
 # include "AMateria.hpp"
-
 
 class	Cure : public AMateria {
 	public:

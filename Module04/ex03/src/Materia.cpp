@@ -1,14 +1,17 @@
 #include "../include/MateriaSource.hpp"
 #include "../include/AMateria.hpp"
 #include <cmath>
+#include <cstddef>
 #include <string>
 
 	// ABSTRACT MATERIA CLASS //
 
-AMateria::AMateria() {}
+AMateria::AMateria() : _type("Unknown type") {}
+
+AMateria::AMateria(std::string const & type) : _type(type) {}
 
 AMateria::AMateria(const AMateria& m) {
-	*this = m;
+	this->_type = m._type;
 }
 
 AMateria&	AMateria::operator=(const AMateria& m) {
@@ -26,7 +29,18 @@ void	AMateria::setType(std::string const & type) {
 	this->_type = type;
 }
 
+void	AMateria::use(ICharacter& target) {
+	std::cout << this->getType() << " used on " << target.getName() << "\n";
+}
+
 	// MATERIASOURCE CLASS //
+
+void	MateriaSource::clearKnowledge() {
+	for (int i = 0; i < N; i++) {
+		if (this->_knowledge[i])
+			delete this->_knowledge[i];
+	}
+}
 
 MateriaSource::MateriaSource() {
 	for (int i = 0; i < N; i++) {
@@ -54,7 +68,9 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& ms) {
 	return *this;
 }
 
-MateriaSource::~MateriaSource() {}
+MateriaSource::~MateriaSource() {
+	clearKnowledge();
+}
 
 void	MateriaSource::learnMateria(AMateria* m) {
 	if (!m) {
@@ -63,11 +79,22 @@ void	MateriaSource::learnMateria(AMateria* m) {
 	}
 	for (int i = 0; i < N; i++) {
 		if (!this->_knowledge[i]) {
-			std::cout << "The materia " << m->getType() << " has been learned.\n";
+			std::cout << "Materia " << m->getType() << " learned.\n";
 			this->_knowledge[i] = m;
 			return;
 		}
 	}
-	std::cerr << "there is no space for materia " << m->getType() << ", will be delete now\n";
+	std::cerr << "There is no space for materia " << m->getType() << ", will be delete now\n";
 	delete m;
+}
+
+AMateria*	MateriaSource::createMateria(std::string const & type) {
+	for (int i = 0; i < N; i++) {
+		if (this->_knowledge[i] && this->_knowledge[i]->getType() == type) {
+			std::cout << "Materia type: " << type << " cretaed\n";
+			return this->_knowledge[i]->clone();
+		}
+	}
+	std::cout << "Materia not found\n";
+	return NULL;
 }

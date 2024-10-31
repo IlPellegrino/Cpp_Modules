@@ -6,6 +6,10 @@
 # include "AMateria.hpp"
 // # include "Materia.hpp"
 
+class	AMateria;
+
+class	ICharacter;
+
 	// STANDARD CLASS //
 
 class	Character : public ICharacter {
@@ -17,18 +21,19 @@ class	Character : public ICharacter {
 		std::string		_name;
 		AMateria*		_slots[N];
 		AMateria*		_voidSlots[INV];
-		// ice [0] 
-		// use idx target
-		// slots[0].use(target); use ** std::cout << balab << target.getName()
 	
 	public:
-		Character(std::string& name);
+		Character();
+		Character(const std::string& name);
 		Character(const Character& c);
 		Character&	operator=(const Character& c);
 		~Character();
 
-		std::string const &	getName();
+		std::string const &	getName() const;
 		void				equip(AMateria* m);
 		void				unequip(int idx);
 		void				use(int idx, ICharacter& target);
+
+		void				clearInventory();
+		void				clearVoidSlots();
 };

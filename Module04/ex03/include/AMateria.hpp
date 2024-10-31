@@ -8,8 +8,7 @@ class	ICharacter;
 
 	// ABSTRACT CLASS //
 
-class AMateria
-{
+class AMateria {
 	protected:
 		std::string	_type;
 

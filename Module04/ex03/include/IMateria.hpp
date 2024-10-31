@@ -3,6 +3,8 @@
 # include <iostream>
 # include "AMateria.hpp"
 
+class	AMateria;
+
 	// INTERFACE //
 
 class IMateriaSource

@@ -13,6 +13,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		$(COMPILE) $(OBJ) -o $(NAME)
+		@clear
 		@echo "Compiled!"
 
 clean:
