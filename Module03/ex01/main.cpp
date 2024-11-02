@@ -8,9 +8,10 @@ int	main()
 	ScavTrap	enemyBot("Guard");
 	ScavTrap	player2("Ciuchino");
 
+	std::cout << '\n';
 	player.attack("Lord Farquad");
 	player.attack("Lord Farquad");
-	enemy.takeDamage(0);
+	enemy.takeDamage(1000);
 	enemy.beRepaired(10);
 
 	player2.guardGate();
@@ -25,5 +26,6 @@ int	main()
 	enemyBot.beRepaired(10);
 	enemyBot.attack("Shrek");
 	player.takeDamage(50);
+	std::cout << '\n';
 
 }
