@@ -1,5 +1,6 @@
 #include "Replace.hpp"
 #include <cstddef>
+#include <cstdio>
 
 Replace::Replace() {}
 
@@ -35,11 +36,19 @@ void	Replace::replaceFile(char **argv) {
 
 	std::string	line;
 	int	start;
+	int	startLine = 0;
+	int size = 0;
+
+	for (int i = 0; i < iFile.end; i++) {
+		getline(iFile, line);
+		size++;
+	}
 	while (getline(iFile, line)) {
 		while ((start = line.find(s1)) != -1) {
-			line.erase(start, s1.length());
+			line.erase(start, s1.size());
 			line.insert(start, s2);
 		}
+		startLine++;
 		oFile << line << std::endl;
 	}
 

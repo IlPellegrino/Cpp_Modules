@@ -1,6 +1,6 @@
 # include "../include/DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap() {
+DiamondTrap::DiamondTrap() : ClapTrap("ClapTrap Default"), ScavTrap(), FragTrap(), _name("Default") {
 	std::cout << "DiamondTrap [DEFAULT] constructor called\n";
 }
 
