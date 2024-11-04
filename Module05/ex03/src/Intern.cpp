@@ -2,6 +2,7 @@
 #include "../include/PresidentialPardonForm.hpp"
 #include "../include/ShrubberyCreationForm.hpp"
 #include "../include/RobotomyRequestForm.hpp"
+#include <cctype>
 #include <cstddef>
 #include <iostream>
 
@@ -14,9 +15,7 @@ Intern::Intern(const Intern& i) {
 }
 
 Intern&	Intern::operator=(const Intern& i) {
-	if (this != &i) {
-
-	}
+	if (this != &i) {}
 
 	return *this;
 }
@@ -25,39 +24,34 @@ Intern::~Intern() {
 	std::cout << "Intern Destructor has been called\n";
 }
 
+Form*	Intern::makePresidentialPardonForm(std::string target) {
+	return new PresidentialPardonForm(target);
+}
+
+Form*	Intern::makeRobotomyRequestForm(std::string target) {
+	return new RobotomyRequestForm(target);
+}
+
+Form*	Intern::makeShrubberyCreationForm(std::string target) {
+	return new ShrubberyCreationForm(target);
+}
+
 Form*	Intern::makeForm(std::string name, std::string target) {
-	std::string	names[] = {"presidential pardon", "Presidential Pardon", "robotomy request", "Robotomy Request", "shrubbery creation", "Shrubbery Creation"};
+	std::string	names[] = {"presidential pardon", "robotomy request", "shrubbery creation"};
+	Form*	(Intern::*functions[3])(std::string target) = {&Intern::makePresidentialPardonForm, &Intern::makeRobotomyRequestForm, &Intern::makeShrubberyCreationForm};
 
-	int i = 0;
-	for (; i < 6; i++) {
-		if (names[i] == name)
-			break;
+	for (size_t i = 0; i <= name.size(); i++)
+		name[i] = std::tolower(name[i]);
+
+	int i;
+	for (i = 0; i < 3; i++) {
+		if (names[i] == name) {
+			std::cout << "Intern creates " << name << std::endl;
+			return (this->*functions[i])(target);
+		}
 	}
 
-	switch (i) {
-		case 0:
-		case 1:
-			PresidentialPardonForm *form;
-			form = new PresidentialPardonForm(target);
-			std::cout << "Intern creates " << name << std::endl;
-			return form;
-		
-		case 2:
-		case 3:
-			RobotomyRequestForm *form_1;
-			form_1 = new RobotomyRequestForm(target);
-			std::cout << "Intern creates " << name << std::endl;
-			return form_1;
-		
-		case 4:
-		case 5:
-			ShrubberyCreationForm *form_2;
-			form_2 = new ShrubberyCreationForm(target);
-			std::cout << "Intern creates " << name << std::endl;
-			return form_2;
+	std::cerr << "Form " << name << " doesn't exist. Try again\n";
 
-		default:
-			std::cerr << "Form doesn't exist. Try again\n";
-			return NULL;
-	}
+	return NULL;
 }

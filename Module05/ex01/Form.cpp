@@ -4,15 +4,14 @@
 #include <ostream>
 #include <string>
 
+Form::Form() : _name("Default"), _isSigned(false), _signGrade(43), _execGrade(64) {
+	checkGrade(_signGrade);
+	checkGrade(_execGrade);
+}
+
 Form::Form(const std::string name, const int signGrade, const int execGrade) : _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade) {
-	try {
-		checkGrade(signGrade);
-		checkGrade(execGrade);
-	} catch (const Form::GradeTooHighException &e) {
-		std::cerr << "Exception: " << e.what() << std::endl;
-	} catch (const Form::GradeTooLowException &i) {
-		std::cerr << "Exception: " << i.what() << std::endl;
-	}
+	checkGrade(signGrade);
+	checkGrade(execGrade);
 }
 
 Form::Form(const Form& f) : _name(f._name), _isSigned(f._isSigned), _signGrade(f._signGrade), _execGrade(f._execGrade) {
@@ -48,27 +47,21 @@ int	Form::getExecGrade() const {
 }
 
 const char * Form::GradeTooHighException::what() const throw() {
-	return "Grade is too high!\n";
+	return "\nException: Grade is too high!\n\n";
 }
 
 const char * Form::GradeTooLowException::what() const throw() {
-	return "Grade is too low!\n";
+	return "\nException: Grade is too low!\n\n";
 }
 
 void	Form::beSigned(const Bureaucrat& b) {
-	try {
-		checkGrade(this->_signGrade);
-		checkGrade(b.getGrade());
-		if (b.getGrade() > this->_signGrade) {
-			throw Form::GradeTooLowException();
-		} else if (b.getGrade() <= this->_signGrade){
-			_isSigned = true;
-		}
-	} catch (const Form::GradeTooHighException &e) {
-		std::cerr << "Exception: " << e.what() << std::endl;
-	} catch (const Form::GradeTooLowException &i) {
-		std::cerr << "Exception: " << i.what() << std::endl;
+	checkGrade(this->_signGrade);
+	checkGrade(b.getGrade());
+	if (b.getGrade() > this->_signGrade) {
+		throw Form::GradeTooLowException();
 	}
+	_isSigned = true;
+
 }
 
 void	Form::checkGrade(int grade) {
@@ -80,6 +73,7 @@ void	Form::checkGrade(int grade) {
 }
 
 std::ostream&	operator<<(std::ostream& os, const Form& f) {
+
 	os << "-----Form Informations-----\n";
 	os << "Name: " << f.getName() << "; Form is signed? -> " << (f.getIsSigned() ? "True;" : "False;") << std::endl;
 	os << "Grade to sign this form: " << f.getSignGrade() << std::endl;

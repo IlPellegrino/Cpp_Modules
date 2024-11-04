@@ -36,24 +36,18 @@ void	Bureaucrat::checkGrade(int grade) {
 }
 
 const char	*Bureaucrat::GradeTooHighException::what() const throw() {
-	return "Grade is too high! Must be between 1 and 150.\n";
+	return "\nException: Grade is too high! Must be between 1 and 150.\n";
 }
 
 const char	*Bureaucrat::GradeTooLowException::what() const throw() {
-	return "Grade is too low! Must be between 1 and 150.\n";
+	return "\nException: Grade is too low! Must be between 1 and 150.\n";
 }
 
 	// SETTERS //
 
 void	Bureaucrat::setGrade(int grade) {
-	try {
-		checkGrade(grade);
-		_grade = grade;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+	checkGrade(grade);
+	_grade = grade;
 }
 
 	// GETTERS //
@@ -66,34 +60,18 @@ int	Bureaucrat::getGrade() {
 	return _grade;
 }
 
-void	Bureaucrat::upGrade(int amount) {
-	int	tmp;
-	
-	try {
-		tmp = _grade;
-		tmp -= amount;
-		checkGrade(tmp);
-		_grade -= amount;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+void	Bureaucrat::upGrade(int amount) {	
+	int tmp = _grade;
+	tmp -= amount;
+	checkGrade(tmp);
+	_grade -= amount;
 }
 
 void	Bureaucrat::downGrade(int amount) {
-	int	tmp;
-
-	try {
-		tmp = _grade;
-		tmp += amount;
-		checkGrade(tmp);
-		_grade += amount;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+	int tmp = _grade;
+	tmp += amount;
+	checkGrade(tmp);
+	_grade += amount;
 }
 
 std::ostream&	operator<<(std::ostream& os, Bureaucrat& b) {

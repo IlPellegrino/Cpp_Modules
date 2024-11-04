@@ -4,14 +4,14 @@
 #include <ostream>
 #include <string>
 
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat() : _name("Default"), _grade(28) {
 	std::cout << "DEFAULT constructor has been called\n";
+	setGrade(_grade);
 }
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name), _grade(grade) {
 	std::cout << "Constructor has been called\n";
-	std::cout << _grade;
-	/* setGrade(grade); */
+	setGrade(grade);
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& b) {
@@ -38,24 +38,18 @@ void	Bureaucrat::checkGrade(int grade) {
 }
 
 const char	*Bureaucrat::GradeTooHighException::what() const throw() {
-	return "Grade is too high! Must be between 1 and 150.\n";
+	return "\nException: Grade is too high! Must be between 1 and 150.\n";
 }
 
 const char	*Bureaucrat::GradeTooLowException::what() const throw() {
-	return "Grade is too low! Must be between 1 and 150.\n";
+	return "\nException: Grade is too low! Must be between 1 and 150.\n";
 }
 
 	// SETTERS //
 
 void	Bureaucrat::setGrade(int grade) {
-	try {
-		checkGrade(grade);
-		_grade = grade;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+	checkGrade(grade);
+	_grade = grade;
 }
 
 	// GETTERS //
@@ -69,41 +63,22 @@ int	Bureaucrat::getGrade() const {
 }
 
 void	Bureaucrat::upGrade(int amount) {
-	
-	try {
-		checkGrade(_grade - amount);
-		_grade -= amount;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+	int tmp = _grade;
+	tmp -= amount;
+	checkGrade(tmp);
+	_grade -= amount;
 }
 
 void	Bureaucrat::downGrade(int amount) {
-	try {
-		checkGrade(_grade + amount);
-		_grade += amount;
-	} catch (const Bureaucrat::GradeTooHighException & e) {
-		std::cerr << "\n\nException: " << e.what() << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException & i) {
-		std::cerr << "\n\nException: " << i.what() << std::endl;
-	}
+	int tmp = _grade;
+	tmp += amount;
+	checkGrade(tmp);
+	_grade += amount;
 }
 
 void	Bureaucrat::executeForm(const Form& form) {
-	try {
-		form.execute(*this);
-		std::cout << getName() << " executed " << form.getName() << std::endl;
-	} 
-	catch (Form::GradeTooHighException& high) {
-		std::cerr << "Exception: " << high.what() << std::endl;
-	} catch (Form::GradeTooLowException& low) {
-		std::cerr << "Exception: " << low.what() << std::endl;	
-	} catch (Form::FormNotSignedException& sign) {
-		std::cerr << "Exception: " << sign.what() << std::endl;	
-	}
-
+	form.execute(*this);
+	std::cout << getName() << " executed " << form.getName() << std::endl;
 }
 
 void	Bureaucrat::signForm(const Form& f) {

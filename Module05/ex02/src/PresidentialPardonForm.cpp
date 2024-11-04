@@ -2,6 +2,12 @@
 #include <iostream>
 #include <string>
 
+PresidentialPardonForm::PresidentialPardonForm()
+	: AForm("PresidentialPardonForm", 25, 5), _target("Default target")
+{
+	std::cout << "DEFAULT Pardon constructor has been called\n";
+}
+
 PresidentialPardonForm::PresidentialPardonForm(const std::string& target)
 	: AForm("PresidentialPardonForm", 25, 5), _target(target)
 {
