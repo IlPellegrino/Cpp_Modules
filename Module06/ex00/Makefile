@@ -6,7 +6,7 @@ COMPILE = c++ -Wall -Wextra -Werror -g -std=c++98
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(SRC)
 		$(COMPILE) $(SRC) -o $(NAME)
 		@clear
 		@echo "Compiled"
@@ -15,8 +15,10 @@ clean:
 		rm -rf $(NAME)
 		@echo "cleaned!"
 
-re: clean all
+fclean: clean
+
+re: fclean all
 
 .SILENT:
 
-.PHONY: all clean re
+.PHONY: all clean fclean re

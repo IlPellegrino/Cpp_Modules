@@ -13,11 +13,13 @@ $(NAME): $(SRC)
 		@echo "Done!"
 
 clean:
-		rm-rf $(NAME)
+		rm -rf $(NAME)
 		@echo "Cleaned!"
 
-re: clean all
+fclean: clean
+
+re: fclean all
 
 .SILENT:
 
-.PHONY: all clean re
+.PHONY: all clean  fclean re

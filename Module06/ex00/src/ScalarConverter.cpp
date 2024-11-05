@@ -146,10 +146,8 @@ void	ScalarConverter::convert(std::string toConvert)
 	if (toConvert.length() == 1 && !isdigit(toConvert[0]))
 	{
 		// CHAR CASE
-		if (toConvert[0] >= 32 && toConvert[0] <= 127) {
-			printChar(toConvert[0]);
-			return;
-		}
+		printChar(toConvert.at(0));
+		return;
 	}
 
 	if (!isDisplayable(toConvert)) {
