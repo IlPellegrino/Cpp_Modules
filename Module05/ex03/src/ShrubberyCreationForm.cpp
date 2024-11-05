@@ -3,10 +3,16 @@
 #include <iostream>
 #include <string>
 
+ShrubberyCreationForm::ShrubberyCreationForm()
+	: Form("ShrubberyCreationForm", 145, 137), _target("Default target")
+{
+	std::cout << "DEFAULT Shrubbery constructor called\n";
+}
+
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
 	: Form("ShrubberyCreationForm", 145, 137), _target(target)
 {
-	std::cout << "DEFAULT Shrubbery constructor called\n";
+	std::cout << "Shrubbery constructor called\n";
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& scf) : Form(scf) {
@@ -29,22 +35,14 @@ std::string	ShrubberyCreationForm::getTarget() const {
 
 void	ShrubberyCreationForm::execute(const Bureaucrat& executor) const 
 {
-    try {
-        checkGrade(executor.getGrade());
-        if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
-            throw Form::GradeTooLowException();
-        }
-        if (this->getIsSigned() == false) {
-            throw  Form::FormNotSignedException();
-        }
-        makeTrees();
-    } catch (Form::GradeTooHighException& high) {
-		std::cerr << "Exception: " << high.what() << std::endl << "Robotomy failed -> :(\n";
-	} catch (Form::GradeTooLowException& low) {
-		std::cerr << "Exception: " << low.what() << std::endl << "Robotomy failed -> :(\n";	
-	} catch (Form::FormNotSignedException& sign) {
-		std::cerr << "Exception: " << sign.what() << std::endl << "Robotomy failed -> :(\n";	
+	checkGrade(executor.getGrade());
+	if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
+	    throw Form::GradeTooLowException();
 	}
+	if (this->getIsSigned() == false) {
+	    throw  Form::FormNotSignedException();
+	}
+	makeTrees();
 }
 
 void	ShrubberyCreationForm::makeTrees() const {

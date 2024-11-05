@@ -8,19 +8,32 @@
 
 int	main()
 {
-	Bureaucrat		lawyer("Gianni", 78);
-	Bureaucrat		president("Ciuschi", 24);
-	Bureaucrat		bartender("Arturo", 52);
-	
-	
-	ShrubberyCreationForm	tree("HOME");
-	RobotomyRequestForm		robot("Rob");
-	PresidentialPardonForm	Pres("John");
+	try {
 
-	tree.beSigned(president);
-	
-	president.signForm(tree);
+		Bureaucrat		lawyer("Gianni", 78);
+		Bureaucrat		president("Ciuschi", 170);
+		Bureaucrat		bartender("Arturo", 52);
 
-	president.executeForm(tree);
+		ShrubberyCreationForm	tree("HOME");
+		RobotomyRequestForm		robot("Rob");
+		PresidentialPardonForm	Pres("John");
+
+		tree.beSigned(president);
+
+		president.signForm(tree);
+
+		president.executeForm(tree);
+
+	} catch (AForm::GradeTooHighException& high) {
+		std::cerr << high.what();
+	} catch (AForm::GradeTooLowException& low) {
+		std::cerr << low.what();
+	} catch (AForm::FormNotSignedException& sign) {
+		std::cerr << sign.what();
+	} catch (Bureaucrat::GradeTooHighException& e) {
+		std::cerr << e.what();
+	} catch (Bureaucrat::GradeTooLowException& i) {
+		std::cerr << i.what();
+	}
 
 }

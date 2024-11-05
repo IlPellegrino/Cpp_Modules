@@ -8,10 +8,12 @@ class	RobotomyRequestForm : public Form {
 		std::string	_target;
 
 	public:
+		RobotomyRequestForm();
 		RobotomyRequestForm(const std::string& target);
 		RobotomyRequestForm(const RobotomyRequestForm& rrf);
-		RobotomyRequestForm& operator=(const RobotomyRequestForm& rrf);
 		~RobotomyRequestForm();
+
+		RobotomyRequestForm& operator=(const RobotomyRequestForm& rrf);
 
 		std::string	getTarget() const;
 

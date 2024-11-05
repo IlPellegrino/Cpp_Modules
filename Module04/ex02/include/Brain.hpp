@@ -10,9 +10,11 @@
 # define YELLOW "\033[33m"
 # define MAGENTA "\033[35m"
 
+# define IDEAS 100
+
 class	Brain {
 	private:
-		std::string	_ideas[100];
+		std::string	_ideas[IDEAS];
 
 	public:
 		Brain();

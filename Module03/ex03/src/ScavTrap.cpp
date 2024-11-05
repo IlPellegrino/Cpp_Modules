@@ -15,7 +15,9 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
 }
 
 ScavTrap::ScavTrap(const ScavTrap& st) : ClapTrap(st._name) {
-	*this = st;
+	this->setAttackDamage(st.getAttackDamage());
+	this->setEnergyPoints(st.getEnergyPoints());
+	this->setHitPoints(st.getHitPoints());
 	std::cout << "ScavTrap [COPY] constructor called\n";
 }
 
@@ -31,7 +33,7 @@ ScavTrap::~ScavTrap() {
 }
 
 void	ScavTrap::attack(const std::string& target) {
-	if (!this->getEnergyPoints()) {
+	if (this->getEnergyPoints() <= 0) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
 	} else if (this->getHitPoints() <= 0) {

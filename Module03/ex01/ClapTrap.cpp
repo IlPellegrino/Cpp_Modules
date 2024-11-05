@@ -52,7 +52,7 @@ int		ClapTrap::getAttackDamage() const {
 }
 
 void	ClapTrap::attack(const std::string& target) {
-	if (!this->_energyPoints || !this->_hitPoints) {
+	if (this->_energyPoints <= 0 || this->_hitPoints <= 0) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
 	}
@@ -77,7 +77,7 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 }
 
 void	ClapTrap::beRepaired(unsigned int amount) {
-	if (!this->_energyPoints) {
+	if (this->_energyPoints <= 0) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
 	} else if (this->_hitPoints <= 0) {

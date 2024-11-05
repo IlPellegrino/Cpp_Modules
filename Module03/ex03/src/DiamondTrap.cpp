@@ -1,6 +1,6 @@
 # include "../include/DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap() {
+DiamondTrap::DiamondTrap() : ClapTrap("ClapTrap Default"), ScavTrap(), FragTrap(), _name("Default") {
 	std::cout << "DiamondTrap [DEFAULT] constructor called\n";
 }
 
@@ -14,8 +14,10 @@ DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), Scav
 	std::cout << "DiamondTrap " << this->getAttackDamage() << " Attack Damage\n";
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap& dt) : ClapTrap(dt._name) {
-	*this = dt;
+DiamondTrap::DiamondTrap(const DiamondTrap& dt) : ClapTrap(dt._name + "_clap_name"), _name(dt._name) {
+	this->setAttackDamage(dt.getAttackDamage());
+	this->setEnergyPoints(dt.getEnergyPoints());
+	this->setHitPoints(dt.getHitPoints());
 	std::cout << "DiamondTrap [COPY] constructor called\n";
 }
 
@@ -27,7 +29,9 @@ DiamondTrap&	DiamondTrap::operator=(const DiamondTrap& dt) {
 	return *this;
 }
 
-DiamondTrap::~DiamondTrap() {}
+DiamondTrap::~DiamondTrap() {
+	std::cout << "DiamndTrap [DEFAULT] destructor called\n";
+}
 
 void	DiamondTrap::whoAmI() {
 	std::cout << YELLOW << "My real name is " << BLUE << _name << RESET << std::endl;

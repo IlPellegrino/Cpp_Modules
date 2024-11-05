@@ -2,6 +2,12 @@
 #include <iostream>
 #include <string>
 
+RobotomyRequestForm::RobotomyRequestForm()
+	: AForm("RobotomyRequestForm", 72, 45), _target("Default target")
+{
+	std::cout << "DEFAULT Robotomy constructor has been called\n";
+}
+
 RobotomyRequestForm::RobotomyRequestForm(const std::string& target)
 	: AForm("RobotomyRequestForm", 72, 45), _target(target)
 {
@@ -32,21 +38,12 @@ void	RobotomyRequestForm::makeNoise() const {
 }
 
 void	RobotomyRequestForm::execute(const Bureaucrat& executor) const {
-	try 
-	{
-		checkGrade(executor.getGrade());
-		if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
-			throw AForm::GradeTooLowException();
-		}
-		if (this->getIsSigned() == false) {
-			throw AForm::FormNotSignedException();
-		}
-		makeNoise();
-	} catch (AForm::GradeTooHighException& high) {
-		std::cerr << "Exception: " << high.what() << std::endl << "Robotomy failed -> :(\n";
-	} catch (AForm::GradeTooLowException& low) {
-		std::cerr << "Exception: " << low.what() << std::endl << "Robotomy failed -> :(\n";	
-	} catch (AForm::FormNotSignedException& sign) {
-		std::cerr << "Exception: " << sign.what() << std::endl << "Robotomy failed -> :(\n";	
+	checkGrade(executor.getGrade());
+	if (executor.getGrade() > getSignGrade() || executor.getGrade() > getExecGrade()) {
+		throw AForm::GradeTooLowException();
 	}
+	if (this->getIsSigned() == false) {
+		throw AForm::FormNotSignedException();
+	}
+	makeNoise();
 }

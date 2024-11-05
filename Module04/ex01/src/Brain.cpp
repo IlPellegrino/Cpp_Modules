@@ -6,10 +6,8 @@ Brain::Brain() {
 }
 
 Brain::Brain(const Brain& b) {
-	int	i = 0;
-	while (i < 100) {
+	for (int i = 0; i < IDEAS; i++) {
 		_ideas[i] = b._ideas[i];
-		i++;
 	}
 	std::cout << "BRAIN [COPY] constructor has been called\n";
 }

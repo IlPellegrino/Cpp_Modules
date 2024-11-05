@@ -20,7 +20,7 @@ ClapTrap&	ClapTrap::operator=(const ClapTrap& cp) {
 }
 
 void	ClapTrap::attack(const std::string& target) {
-	if (!this->_energyPoints || !this->_hitPoints) {
+	if (this->_energyPoints <= 0 || this->_hitPoints <= 0) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
 	}
@@ -33,15 +33,23 @@ void	ClapTrap::attack(const std::string& target) {
 void	ClapTrap::takeDamage(unsigned int amount) {
 	std::cout << BLUE << this->_name << YELLOW << " has taken " << RED << amount << YELLOW << " points of damage! Ouch!\n" << RESET;
 	this->_hitPoints -= amount;
+	if (this->_hitPoints <= 0) {
+		std::cout << BLUE << this->_name << MAGENTA << " is dead!!!\n" << RESET;
+		return;
+	}
 }
 
 void	ClapTrap::beRepaired(unsigned int amount) {
-	if (!this->_energyPoints || !this->_hitPoints) {
+	if (this->_energyPoints <= 0 || this->_hitPoints <= 0) {
 		std::cout << MAGENTA << "\nYou need some rest bro..\nNo energy means no action!\n\n" << RESET;
 		return;
 	}
 	std::cout << BLUE << this->_name << YELLOW << " got repaired and got " << RED << amount << YELLOW << " back!\n" << RESET;
 	this->_hitPoints += amount;
+	if (this->_hitPoints <= 0) {
+		std::cout << BLUE << this->_name << MAGENTA << " is dead!!!\n" << RESET;
+		return;
+	}
 	this->_energyPoints -= 1;
 	std::cout << this->_name << " has now " << this->_energyPoints << " energy and " << this->_hitPoints << " hit points\n";
 }

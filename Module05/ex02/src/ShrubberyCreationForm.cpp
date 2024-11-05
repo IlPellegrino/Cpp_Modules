@@ -3,6 +3,12 @@
 #include <iostream>
 #include <string>
 
+ShrubberyCreationForm::ShrubberyCreationForm()
+	: AForm("ShrubberyCreationForm", 145, 137), _target("Default target")
+{
+	std::cout << "DEFAULT Shrubbery constructor called\n";
+}
+
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
 	: AForm("ShrubberyCreationForm", 145, 137), _target(target)
 {
