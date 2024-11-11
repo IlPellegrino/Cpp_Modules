@@ -16,6 +16,8 @@ clean:
 		rm -rf $(NAME)
 		@echo "All cleaned up!"
 
+fclean: clean
+
 re: clean all
 
 .SILENT:
