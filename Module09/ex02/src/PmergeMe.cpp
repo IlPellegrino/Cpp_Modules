@@ -359,14 +359,15 @@ void	PmergeMe::recursiveDequePairSort(std::deque<std::pair<int, int> >& pairs, i
 
 int	PmergeMe::parseNumber(const std::string& token)
 {
+	if (token.empty())
+		throw InvalidTokenException();
+
 	for (int i = 0; token[i]; i++) {
 		if (!std::isdigit(token[i])) {
 			throw InvalidTokenException();
 		}
 	}
 	int	number = atoi(token.c_str());
-	if (token.empty())
-		throw InvalidTokenException();
 	return number;
 }
 
@@ -427,6 +428,14 @@ bool	checkForDuplicates(char **av, int n)
 
 void	PmergeMe::start(char **av, int n)
 {
+	size_t i;
+	for (i = 0; i < std::string(av[1]).size(); i++) {
+		if (std::string(av[1]).at(i) != ' ')
+			break;
+	}
+	if (i == std::string(av[1]).size()) {
+		throw InvalidTokenException();
+	}
 	if (checkForDuplicates(av, n))
 		throw DuplicatesFoundExceptiond();
 
@@ -435,6 +444,10 @@ void	PmergeMe::start(char **av, int n)
 
 	// ONE ARG ELSE MORE ARGS//
 	if (n == 1) {
+
+		if (std::string(av[1]).empty()) {
+			throw InvalidTokenException();
+		}
 		std::vector<int>	vArr;
 		std::deque<int>		dArr;
 
@@ -445,9 +458,7 @@ void	PmergeMe::start(char **av, int n)
 		while(stream >> token) {
 			int number;
 
-			try {
-				number = parseNumber(token);
-			} catch (std::exception& e) { (void)e; }
+			number = parseNumber(token);
 			vArr.push_back(number);
 			dArr.push_back(number);
 		}

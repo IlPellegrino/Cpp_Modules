@@ -16,8 +16,10 @@ clean:
 		@clear
 		@echo "All cleaned up!"
 
+fclean: clean
+
 re: clean all
 
 .SILENT:
 
-.PHONY: all clean re
+.PHONY: all clean fclean re

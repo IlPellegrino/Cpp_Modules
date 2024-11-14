@@ -78,7 +78,7 @@ float	RPN::splitToStack(const std::string& input) {
 			float n2 = operands.top();
 			operands.pop();
 
-			float result = RPN::doOperation(n1, n2, token[0]);
+			float result = RPN::doOperation(n2, n1, token[0]);
 			operands.push(result);
 		}
 		else if (isNumber) {

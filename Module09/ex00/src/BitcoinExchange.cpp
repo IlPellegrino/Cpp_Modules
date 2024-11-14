@@ -53,6 +53,9 @@ time_t	BitcoinExchange::findClosestDate(const time_t& targetTime) {
 		return 0;
 	}
 
+	if (dbIt->first != targetTime) {
+		dbIt--;
+	}
 	time_t	closestDate = dbIt->first;
 
 	return closestDate;

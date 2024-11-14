@@ -15,8 +15,10 @@ clean:
 		rm -rf $(NAME)
 		@echo "All cleaned up!"
 
+fclean: clean
+
 re: clean all
 
 .SILENT:
 
-.PHONY: all clean re
+.PHONY: all clean fclean re
